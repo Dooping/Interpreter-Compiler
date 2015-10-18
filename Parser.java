@@ -35,17 +35,6 @@ public class Parser implements ParserConstants {
     throw new Error("Missing return statement in function");
   }
 
-/*
-ASTNode MinusExp():
-{ ASTNode t;
-	Token op; }
-{	t = Exp() { return t; }
-	| <MINUS> t = MinusExp()
-		{ 
-            t = new ASTSub(new ASTNum(0),t);
-         }
-    { return t; }
-}*/
   static final public ASTNode Exp() throws ParseException {
   Token op;
   ASTNode t1, t2;
@@ -219,6 +208,11 @@ ASTNode MinusExp():
       n = jj_consume_token(Num);
              t = new ASTNum(Integer.parseInt(n.image)); {if (true) return t;}
       break;
+    case MINUS:
+      jj_consume_token(MINUS);
+      n = jj_consume_token(Num);
+                       t = new ASTNum(-Integer.parseInt(n.image)); {if (true) return t;}
+      break;
     case LPAR:
       jj_consume_token(LPAR);
       t = Exp();
@@ -284,7 +278,7 @@ ASTNode MinusExp():
       jj_la1_init_0();
    }
    private static void jj_la1_init_0() {
-      jj_la1_0 = new int[] {0x600,0x600,0x1800,0x1800,0x78000,0x78000,0x180000,0x180000,0x402110,0x400000,};
+      jj_la1_0 = new int[] {0x600,0x600,0x1800,0x1800,0x78000,0x78000,0x180000,0x180000,0x402510,0x400000,};
    }
 
   /** Constructor with InputStream. */

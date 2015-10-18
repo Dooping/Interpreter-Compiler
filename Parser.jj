@@ -81,20 +81,9 @@ TOKEN :
 
 ASTNode Start():
 { ASTNode t; }{
-  t = MinusExp() <EL> 
+  t = Exp() <EL> 
   {return t; }
-}
-
-ASTNode MinusExp():
-{ ASTNode t;
-	Token op; }
-{	t = Exp() { return t; }
-	| <MINUS> t = Exp()
-		{ 
-            t = new ASTSub(new ASTNum(0),t);
-         }
-    { return t; }
-}  
+}  
 
 ASTNode Exp():
 { Token op;
@@ -166,7 +155,7 @@ ASTNode Fact() :
   ASTNode t;}
 {
    n=<Num> { t = new ASTNum(Integer.parseInt(n.image)); return t; }
-   
+ | < MINUS > n=<Num> { t = new ASTNum(-Integer.parseInt(n.image)); return t; }
    | <LPAR> t=Exp() <RPAR> { return t; }
    | n = <Id> { return new ASTId(n.image); }
    | t = Decl() {   return t; }   
