@@ -210,8 +210,8 @@ public class Parser implements ParserConstants {
       break;
     case MINUS:
       jj_consume_token(MINUS);
-      n = jj_consume_token(Num);
-                       t = new ASTNum(-Integer.parseInt(n.image)); {if (true) return t;}
+      t = Fact();
+                        t = new ASTNegative(t); {if (true) return t;}
       break;
     case LPAR:
       jj_consume_token(LPAR);

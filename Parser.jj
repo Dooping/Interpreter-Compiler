@@ -155,7 +155,7 @@ ASTNode Fact() :
   ASTNode t;}
 {
    n=<Num> { t = new ASTNum(Integer.parseInt(n.image)); return t; }
- | < MINUS > n=<Num> { t = new ASTNum(-Integer.parseInt(n.image)); return t; }
+ | < MINUS > t=Fact() { t = new ASTNegative(t); return t; }
    | <LPAR> t=Exp() <RPAR> { return t; }
    | n = <Id> { return new ASTId(n.image); }
    | t = Decl() {   return t; }   
