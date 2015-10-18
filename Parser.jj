@@ -1,0 +1,192 @@
+PARSER_BEGIN(Parser)
+import java.util.*;
+
+/** ID lister. */
+public class Parser {
+
+  /** Main entry point. */
+  public static void main(String args[]) {
+    Parser parser = new Parser(System.in);
+    ASTNode exp;
+
+    while (true) {
+    try {
+    exp = parser.Start();
+   System.out.println( exp.toString() + " = " + exp.eval(new Environ()) );
+    } catch (Exception e) {
+      System.out.println ("Syntax Error!");
+       e.printStackTrace();
+      parser.ReInit(System.in);
+    }
+    }
+  }
+}
+
+PARSER_END(Parser)
+
+SKIP :
+{
+  " "
+| "\t"
+| "\r"
+}
+
+TOKEN :
+{
+  < DECL : "decl" >
+   |
+  < IN : "in" >
+   |
+  < END : "end" >
+  |
+  < ASSOC : "=" >
+  |
+  < Num: (["0"-"9"]) + >
+  |
+  < PLUS : "+" >
+  |
+  < MINUS : "-">
+  |
+  < TIMES : "*">
+  |
+  < DIV : "/">
+  |
+  < LPAR : "(" >
+  |
+  < RPAR : ")" >
+  |
+  < BIGGER : ">" >
+  |
+  < SMALLER : "<" >
+  |
+  < EQUALS : "==" >
+  |
+  < DIF : "!=" >
+  |
+  < AND : "&&" >
+  |
+  < OR : "||" >
+  |
+  < EL: "\n" >
+  |
+  < Id: ["a"-"z","A"-"Z"] ( ["a"-"z","A"-"Z","0"-"9"] )* >
+}
+
+//ASTNode Start():
+//{ ASTNode t; }
+//{
+//   t = Exp() <EL>
+//   {return t; }
+//}
+
+ASTNode Start():
+{ ASTNode t; }{
+  t = MinusExp() <EL> 
+  {return t; }
+}
+
+ASTNode MinusExp():
+{ ASTNode t;
+	Token op; }
+{	t = Exp() { return t; }
+	| <MINUS> t = Exp()
+		{ 
+            t = new ASTSub(new ASTNum(0),t);
+         }
+    { return t; }
+}  
+
+ASTNode Exp():
+{ Token op;
+  ASTNode t1, t2; }
+{
+     t1=Term() ( ( op=<PLUS> | op=<MINUS> ) t2=Term() 
+                 { if (op.kind == PLUS) 
+                         t1 = new ASTPlus(t1,t2);
+                   else  t1 = new ASTSub(t1,t2);
+                 } 
+               ) *
+     { return t1; } 
+}
+
+
+
+ASTNode Term() :
+{Token op;
+  ASTNode f1, f2;}
+{
+     f1 = Cmp() ( ( op=<TIMES> | op=<DIV> ) f2=Cmp()
+    			 { if (op.kind == TIMES) 
+                         f1 = new ASTMul(f1,f2);
+                   else  f1 = new ASTDiv(f1,f2);
+                 }
+                  )*
+     { return f1; } 
+}
+
+ASTNode Cmp():
+{Token op;
+  ASTNode d1, d2;}
+{
+     d1 = Bexp() ( ( op=<BIGGER> | op=<SMALLER> | op=<EQUALS> | op=<DIF>) d2=Bexp()
+    			 { if (op.kind == BIGGER)    			 {
+    			    d1 = new ASTBigger(d1,d2);
+    			  }	
+                   else if (op.kind == SMALLER)                   {
+                    	d1 = new ASTSmaller(d1,d2);
+                   }
+                    else if (op.kind == EQUALS)                    {                      d1 = new ASTEquals(d1,d2);
+                    }
+                     else if (op.kind == DIF)
+                    {
+                      d1 = new ASTDif(d1,d2);
+                    }
+                    	
+                 }
+                  )*
+     { return d1; } 
+}
+
+ASTNode Bexp() :
+{Token op;
+  ASTNode q1, q2;}
+{
+     q1 = Fact() ( ( op=<AND> | op=<OR> ) q2=Fact()
+    			 { if (op.kind == AND) 
+                         q1 = new ASTAnd(q1,q2);
+                   else  q1 = new ASTOr(q1,q2);
+                 }
+                  )*
+     { return q1; } 
+}
+
+
+ASTNode Fact() :
+{ Token n; 
+  ASTNode t;}
+{
+   n=<Num> { t = new ASTNum(Integer.parseInt(n.image)); return t; }
+   
+   | <LPAR> t=Exp() <RPAR> { return t; }
+   | n = <Id> { return new ASTId(n.image); }
+   | t = Decl() {   return t; }   
+}
+
+ASTNode Decl():
+{
+  ASTNode t1,t2;
+  Token x;
+  ArrayList <Binding> bindings = new ArrayList<Binding>();
+
+}
+{
+ <DECL> (x = <Id> <ASSOC> t1 = Exp()
+ { bindings.add(new Binding (x.image, t1));}
+ )+
+  <IN> t2 = Exp() <END>
+ {
+   return new ASTDecl(bindings,t2);
+ }
+
+}
+
