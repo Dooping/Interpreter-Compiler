@@ -15,7 +15,7 @@ public class ASTNegative implements ASTNode {
         
     @Override
     public String toString(){
-    	return "-"+num.toString();
+    	return num.toString();
     }
 
 	

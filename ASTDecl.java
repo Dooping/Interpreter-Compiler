@@ -51,7 +51,7 @@ public class ASTDecl implements ASTNode{
 	
 	
 	public String toString(){
-    	return expr.toString();
+    	return "(" +  expr.toString() + ")";
     }
 
 
