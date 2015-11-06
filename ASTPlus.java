@@ -6,6 +6,18 @@ ASTNode left, right;
 	{ 
 		return left.eval(env) + right.eval(env); 
 	}
+	
+	/*public IValue eval(Environ<IValue> env) throws UndeclaredIdentifierException, DuplicateIdentifierException 
+	{ 
+		return new IntegerValue(((IntegerValue)left.eval(env)).getValue()+((IntegerValue)right.eval(env)).getValue()); 
+	}*/
+	
+	public Type typeCheck(Environ<Type> env){
+		Type t1 = left.typeCheck(env);
+		Type t2 = right.typeCheck(env);
+		if (t1==IntType.value && t2==IntType.value)
+			return IntType.value;
+	}
 
     public ASTPlus(ASTNode l, ASTNode r)
     {

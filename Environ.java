@@ -1,7 +1,7 @@
 import java.util.*;;
 
 
-public class Environ {
+public class Environ<T> {
 
 	static class Assoc{
 		String id;
@@ -13,7 +13,7 @@ public class Environ {
 		}
 	}
 	
-	Environ up;
+	Environ<T> up;
 	ArrayList<Assoc> assocs;
 	
 	public Environ(){
@@ -21,13 +21,13 @@ public class Environ {
 		assocs = new ArrayList<Assoc>();
 	}
 	
-	private Environ (Environ up){
+	private Environ (Environ<T> up){
 		this.up = up;
 		assocs = new ArrayList<Assoc>();
 	}
 	
 	int find(String id) throws UndeclaredIdentifierException{
-		Environ current = this;
+		Environ<T> current = this;
 		ArrayList<Assoc> teste = this.assocs;
 
 		while (current != null ){
@@ -43,11 +43,11 @@ public class Environ {
 		return assocs;
 	}
 	
-	Environ beginScope(){
-		return new Environ(this);
+	Environ<T> beginScope(){
+		return new Environ<T>(this);
 	}
 	
-	Environ endScope(){
+	Environ<T> endScope(){
 		return up;
 	}
 	
