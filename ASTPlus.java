@@ -17,6 +17,8 @@ ASTNode left, right;
 		Type t2 = right.typeCheck(env);
 		if (t1==IntType.value && t2==IntType.value)
 			return IntType.value;
+		else
+			throw new TypeErrorException();
 	}
 
     public ASTPlus(ASTNode l, ASTNode r)
