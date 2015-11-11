@@ -12,6 +12,7 @@ public class Parser implements ParserConstants {
     while (true) {
     try {
     exp = parser.Start();
+    //t = exp.typeCheck(new Environ<Type>)
    System.out.println( exp.toString() + " = " + exp.eval(new Environ()) );
     } catch (Exception e) {
       System.out.println ("Syntax Error!");
