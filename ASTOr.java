@@ -3,11 +3,22 @@ public class ASTOr implements ASTNode{
 
 	ASTNode left, right;
 	
-	public int eval(Environ e) throws UndeclaredIdentifierException, DuplicateIdentifierException 
-	{
-		if(left.eval(e) == 0 && right.eval(e) == 0)
-			return 0;
-		return 1; 
+	public IValue eval(Environ<IValue> env) throws UndeclaredIdentifierException, DuplicateIdentifierException 
+	{ 
+		if(((IntegerValue)left.eval(env)).getValue()== 0 && ((IntegerValue)right.eval(env)).getValue()==0){
+			return new IntegerValue(0); 
+		}
+		return new IntegerValue(1); 
+		
+	}
+	
+	public Type typeCheck(Environ<Type> env) throws TypeErrorException{
+		Type t1 = left.typeCheck(env);
+		Type t2 = right.typeCheck(env);
+		if (t1==IntType.value && t2==IntType.value)
+			return IntType.value;
+		else
+			throw new TypeErrorException(null);
 	}
 	
 	 public ASTOr(ASTNode l, ASTNode r)

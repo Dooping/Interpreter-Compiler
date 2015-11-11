@@ -6,9 +6,17 @@ public class ASTId implements ASTNode{
 		this.id = id;
 	}
 	
-	public int eval(Environ env) throws UndeclaredIdentifierException {
+	public IValue eval(Environ<IValue> env) throws UndeclaredIdentifierException, DuplicateIdentifierException 
+	{ 
 		return env.find(id);
 	}
+	
+	public Type typeCheck(Environ<Type> env) throws TypeErrorException{
+		//TODO: 
+		return null;
+	}
+	
+
 
 	public void compile(CodeBlock code, CompilerFrame env)throws UndeclaredIdentifierException, DuplicateIdentifierException {
 		code.comment("get a value");

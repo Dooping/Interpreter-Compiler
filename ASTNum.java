@@ -1,10 +1,14 @@
 public class ASTNum implements ASTNode {
 
-int val;
+	int val;
 
-	public int eval(Environ e) 
+	public IValue eval(Environ<IValue> env) 
 	{ 
-		return val; 
+		return new IntegerValue(val); 
+	}
+	
+	public Type typeCheck(Environ<Type> env) throws TypeErrorException{
+		return IntType.value;
 	}
 
     public ASTNum(int n)

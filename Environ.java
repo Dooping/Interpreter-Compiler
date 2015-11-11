@@ -5,9 +5,9 @@ public class Environ<T> {
 
 	static class Assoc{
 		String id;
-		int value;
+		IValue value;
 		
-		public Assoc(String id, int value){
+		public Assoc(String id, IValue value){
 			this.id=id;
 			this.value=value;
 		}
@@ -26,7 +26,7 @@ public class Environ<T> {
 		assocs = new ArrayList<Assoc>();
 	}
 	
-	int find(String id) throws UndeclaredIdentifierException{
+	IValue find(String id) throws UndeclaredIdentifierException{
 		Environ<T> current = this;
 		ArrayList<Assoc> teste = this.assocs;
 
@@ -51,7 +51,7 @@ public class Environ<T> {
 		return up;
 	}
 	
-	void assoc(String id, int value) throws DuplicateIdentifierException{
+	void assoc(String id, IValue value) throws DuplicateIdentifierException{
 			for (Assoc assoc: assocs)
 				if(assoc.id.equals(id))
 					throw new DuplicateIdentifierException(id);

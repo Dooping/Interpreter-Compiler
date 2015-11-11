@@ -72,18 +72,11 @@ TOKEN :
   < Id: ["a"-"z","A"-"Z"] ( ["a"-"z","A"-"Z","0"-"9"] )* >
 }
 
-//ASTNode Start():
-//{ ASTNode t; }
-//{
-//   t = Exp() <EL>
-//   {return t; }
-//}
-
 ASTNode Start():
 { ASTNode t; }{
   t = Exp() <EL> 
   {return t; }
-}  
+}
 
 ASTNode Exp():
 { Token op;

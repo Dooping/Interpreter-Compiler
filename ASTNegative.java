@@ -3,11 +3,19 @@ public class ASTNegative implements ASTNode {
 
 	ASTNode num;
 	
-	public int eval(Environ e) throws UndeclaredIdentifierException, DuplicateIdentifierException 
+	public IValue eval(Environ<IValue> e) throws UndeclaredIdentifierException, DuplicateIdentifierException 
 	{ 
-		return -num.eval(e); 
+		return new IntegerValue(- ((IntegerValue) num.eval(e)).getValue()); 
 	}
 
+	public Type typeCheck(Environ<Type> env) throws TypeErrorException{
+		Type t1 = num.typeCheck(env);
+		if (t1==IntType.value )
+			return IntType.value;
+		else
+			throw new TypeErrorException(null);
+	}
+	
     public ASTNegative(ASTNode num)
     {
     	this.num = num;

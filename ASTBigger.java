@@ -3,12 +3,22 @@ public class ASTBigger implements ASTNode{
 
 	ASTNode left, right;
 	
-	public int eval(Environ e) throws UndeclaredIdentifierException, DuplicateIdentifierException {
+	public IValue eval(Environ<IValue> env) throws UndeclaredIdentifierException, DuplicateIdentifierException 
+	{ 
+		if(((IntegerValue)left.eval(env)).getValue() > ((IntegerValue)right.eval(env)).getValue()){
+			return new IntegerValue(1); 
+		}
+		return new IntegerValue(0); 
 		
-		if(left.eval(e) > right.eval(e))
-			return 1;
-		
-		return 0; 
+	}
+	
+	public Type typeCheck(Environ<Type> env) throws TypeErrorException{
+		Type t1 = left.typeCheck(env);
+		Type t2 = right.typeCheck(env);
+		if (t1==IntType.value && t2==IntType.value)
+			return IntType.value;
+		else
+			throw new TypeErrorException(null);
 	}
 	
 	 public ASTBigger(ASTNode l, ASTNode r)
