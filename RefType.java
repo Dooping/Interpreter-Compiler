@@ -15,7 +15,7 @@ public class RefType implements Type{
 	}
 	
 	@Override
-	public boolean equals(Object o) throws TypeErrorException{
+	public boolean equals(Object o){
 		if (o instanceof RefType){
 			Type other = ((RefType) o).getType();
 			return this.type.equals(other);

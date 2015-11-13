@@ -19,6 +19,10 @@ public class ASTAssign implements ASTNode{
 	public Type typeCheck(Environ<Type> env) throws TypeErrorException {
 		// left RefType
 		// right Type
+		RefType reftype = (RefType) left.typeCheck(env);
+		Type type = right.typeCheck(env);
+		if(reftype.equals(type))
+			return 
 		return null;
 	}
 
