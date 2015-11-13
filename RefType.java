@@ -7,7 +7,7 @@ public class RefType implements Type{
 	}
 	
 	public String toString(){
-		return "";
+		return "Ref";
 	}
 	
 	public Type getType(){
@@ -21,7 +21,7 @@ public class RefType implements Type{
 			return this.type.equals(other);
 		}
 		else
-			throw new TypeErrorException(null);
+			return false;
 	}
 
 }
