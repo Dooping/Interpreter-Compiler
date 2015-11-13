@@ -25,8 +25,7 @@ public class ASTDecl implements ASTNode{
 		return value;
 	}
 	public Type typeCheck(Environ<Type> env) throws TypeErrorException{
-		Type t1 = expr.typeCheck(env);
-		return t1;
+		return expr.typeCheck(env);
 	}
 
 	@SuppressWarnings("static-access")

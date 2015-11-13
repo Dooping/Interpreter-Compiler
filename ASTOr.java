@@ -5,18 +5,18 @@ public class ASTOr implements ASTNode{
 	
 	public IValue eval(Environ<IValue> env) throws UndeclaredIdentifierException, DuplicateIdentifierException 
 	{ 
-		if(((IntegerValue)left.eval(env)).getValue()== 0 && ((IntegerValue)right.eval(env)).getValue()==0){
-			return new IntegerValue(0); 
+		if(((BooleanValue)left.eval(env)).getValue() || ((BooleanValue)right.eval(env)).getValue()){
+			return new BooleanValue(true); 
 		}
-		return new IntegerValue(1); 
+		return new BooleanValue(false); 
 		
 	}
 	
 	public Type typeCheck(Environ<Type> env) throws TypeErrorException{
 		Type t1 = left.typeCheck(env);
 		Type t2 = right.typeCheck(env);
-		if (t1==IntType.value && t2==IntType.value)
-			return IntType.value;
+		if (t1==BoolType.value && t2==BoolType.value)
+			return BoolType.value;
 		else
 			throw new TypeErrorException(null);
 	}

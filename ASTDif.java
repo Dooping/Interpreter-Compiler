@@ -6,16 +6,16 @@ public class ASTDif implements ASTNode{
 	public IValue eval(Environ<IValue> env) throws UndeclaredIdentifierException, DuplicateIdentifierException 
 	{ 
 		if(((IntegerValue)left.eval(env)).getValue() != ((IntegerValue)right.eval(env)).getValue()){
-			return new IntegerValue(1); 
+			return new BooleanValue(true); 
 		}
-		return new IntegerValue(0); 
+		return new BooleanValue(false); 
 	}
 	
 	public Type typeCheck(Environ<Type> env) throws TypeErrorException{
 		Type t1 = left.typeCheck(env);
 		Type t2 = right.typeCheck(env);
 		if (t1==IntType.value && t2==IntType.value)
-			return IntType.value;
+			return BoolType.value;
 		else
 			throw new TypeErrorException(null);
 	}

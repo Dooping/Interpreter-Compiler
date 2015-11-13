@@ -12,8 +12,8 @@ public class Parser implements ParserConstants {
     while (true) {
     try {
     exp = parser.Start();
-    //t = exp.typeCheck(new Environ<Type>)
-   System.out.println( exp.toString() + " = " + exp.eval(new Environ()) );
+    exp.typeCheck(new Environ<Type>());
+   System.out.println( exp.toString() + " = " + exp.eval(new Environ<IValue>()) );
     } catch (Exception e) {
       System.out.println ("Syntax Error!");
        e.printStackTrace();
@@ -22,12 +22,6 @@ public class Parser implements ParserConstants {
     }
   }
 
-//ASTNode Start():
-//{ ASTNode t; }
-//{
-//   t = Exp() <EL>
-//   {return t; }
-//}
   static final public ASTNode Start() throws ParseException {
   ASTNode t;
     t = Exp();

@@ -12,7 +12,8 @@ public class Parser {
     while (true) {
     try {
     exp = parser.Start();
-   System.out.println( exp.toString() + " = " + exp.eval(new Environ()) );
+    exp.typeCheck(new Environ<Type>());
+   System.out.println( exp.toString() + " = " + exp.eval(new Environ<IValue>()) );
     } catch (Exception e) {
       System.out.println ("Syntax Error!");
        e.printStackTrace();
