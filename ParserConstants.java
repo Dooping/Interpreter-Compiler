@@ -17,35 +17,39 @@ public interface ParserConstants {
   /** RegularExpression Id. */
   int ASSOC = 7;
   /** RegularExpression Id. */
-  int Num = 8;
+  int BOOL = 8;
   /** RegularExpression Id. */
-  int PLUS = 9;
+  int Num = 9;
   /** RegularExpression Id. */
-  int MINUS = 10;
+  int PLUS = 10;
   /** RegularExpression Id. */
-  int TIMES = 11;
+  int MINUS = 11;
   /** RegularExpression Id. */
-  int DIV = 12;
+  int TIMES = 12;
   /** RegularExpression Id. */
-  int LPAR = 13;
+  int DIV = 13;
   /** RegularExpression Id. */
-  int RPAR = 14;
+  int LPAR = 14;
   /** RegularExpression Id. */
-  int BIGGER = 15;
+  int RPAR = 15;
   /** RegularExpression Id. */
-  int SMALLER = 16;
+  int BIGGER = 16;
   /** RegularExpression Id. */
-  int EQUALS = 17;
+  int SMALLER = 17;
   /** RegularExpression Id. */
-  int DIF = 18;
+  int EQUALS = 18;
   /** RegularExpression Id. */
-  int AND = 19;
+  int DIF = 19;
   /** RegularExpression Id. */
-  int OR = 20;
+  int AND = 20;
   /** RegularExpression Id. */
-  int EL = 21;
+  int OR = 21;
   /** RegularExpression Id. */
-  int Id = 22;
+  int EL = 22;
+  /** RegularExpression Id. */
+  int VAR = 23;
+  /** RegularExpression Id. */
+  int Id = 24;
 
   /** Lexical state. */
   int DEFAULT = 0;
@@ -60,6 +64,7 @@ public interface ParserConstants {
     "\"in\"",
     "\"end\"",
     "\"=\"",
+    "<BOOL>",
     "<Num>",
     "\"+\"",
     "\"-\"",
@@ -74,6 +79,7 @@ public interface ParserConstants {
     "\"&&\"",
     "\"||\"",
     "\"\\n\"",
+    "\"var\"",
     "<Id>",
   };
 

@@ -12,7 +12,7 @@ public class Parser {
     while (true) {
     try {
     exp = parser.Start();
-    exp.typeCheck(new Environ<Type>());
+	exp.typeCheck(new Environ<Type>());
    System.out.println( exp.toString() + " = " + exp.eval(new Environ<IValue>()) );
     } catch (Exception e) {
       System.out.println ("Syntax Error!");
@@ -42,6 +42,8 @@ TOKEN :
   |
   < ASSOC : "=" >
   |
+  < BOOL : "true"|"false" >
+  | 
   < Num: (["0"-"9"]) + >
   |
   < PLUS : "+" >
@@ -70,6 +72,8 @@ TOKEN :
   |
   < EL: "\n" >
   |
+  < VAR: "var" >
+  |
   < Id: ["a"-"z","A"-"Z"] ( ["a"-"z","A"-"Z","0"-"9"] )* >
 }
 
@@ -91,8 +95,6 @@ ASTNode Exp():
                ) *
      { return t1; } 
 }
-
-
 
 ASTNode Term() :
 {Token op;
@@ -148,8 +150,12 @@ ASTNode Fact() :
 { Token n; 
   ASTNode t;}
 {
-   n=<Num> { t = new ASTNum(Integer.parseInt(n.image)); return t; }
- | < MINUS > t=Fact() { t = new ASTNegative(t); return t; }
+
+    n=<Num> { t = new ASTNum(Integer.parseInt(n.image)); return t; }
+   |n=< BOOL >  { t = new ASTBool(Boolean.parseBoolean(n.image)); return t; }
+   | < VAR ><LPAR > t=Exp() < RPAR > { t = new ASTVar(t); return t; }
+   | <TIMES>t=Exp() { return new ASTDesref(t);}
+   | < MINUS > t=Fact() { t = new ASTNegative(t); return t; }
    | <LPAR> t=Exp() <RPAR> { return t; }
    | n = <Id> { return new ASTId(n.image); }
    | t = Decl() {   return t; }   

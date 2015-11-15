@@ -15,7 +15,7 @@ public class RefValue implements IValue{
 	}
 	
 	public String toString() {
-		return "var("+val.toString()+")";
+		return "ref("+val.toString()+")";
 	}
 
 }

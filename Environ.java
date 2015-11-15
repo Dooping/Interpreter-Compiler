@@ -6,10 +6,12 @@ public class Environ<T> {
 	static class Assoc{
 		String id;
 		IValue value;
+		Type type;
 		
-		public Assoc(String id, IValue value){
+		public Assoc(String id, IValue value, Type type){
 			this.id=id;
 			this.value=value;
+			this.type=type;
 		}
 	}
 	
@@ -38,6 +40,19 @@ public class Environ<T> {
 			teste = current.getAssoc();
 		}throw new UndeclaredIdentifierException(id);
 	}
+	/*
+	Type findType(String id) throws UndeclaredIdentifierException{
+		Environ<T> current = this;
+		ArrayList<Assoc> teste = this.assocs;
+
+		while (current != null ){
+			for(Assoc assoc: teste)
+				if(assoc.id.equals(id))
+					return assoc.
+			current = current.up;
+			teste = current.getAssoc();
+		}throw new UndeclaredIdentifierException(id);
+	}*/
 	
 	public ArrayList<Assoc> getAssoc (){
 		return assocs;
@@ -51,11 +66,11 @@ public class Environ<T> {
 		return up;
 	}
 	
-	void assoc(String id, IValue value) throws DuplicateIdentifierException{
+	void assoc(String id, IValue value, Type type) throws DuplicateIdentifierException{
 			for (Assoc assoc: assocs)
 				if(assoc.id.equals(id))
 					throw new DuplicateIdentifierException(id);
-			assocs.add(new Assoc(id,value));
+			assocs.add(new Assoc(id,value,type));
 	}
 }
 

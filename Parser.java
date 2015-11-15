@@ -12,7 +12,7 @@ public class Parser implements ParserConstants {
     while (true) {
     try {
     exp = parser.Start();
-    exp.typeCheck(new Environ<Type>());
+        exp.typeCheck(new Environ<Type>());
    System.out.println( exp.toString() + " = " + exp.eval(new Environ<IValue>()) );
     } catch (Exception e) {
       System.out.println ("Syntax Error!");
@@ -201,12 +201,28 @@ public class Parser implements ParserConstants {
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case Num:
       n = jj_consume_token(Num);
-             t = new ASTNum(Integer.parseInt(n.image)); {if (true) return t;}
+              t = new ASTNum(Integer.parseInt(n.image)); {if (true) return t;}
+      break;
+    case BOOL:
+      n = jj_consume_token(BOOL);
+                  t = new ASTBool(Boolean.parseBoolean(n.image)); {if (true) return t;}
+      break;
+    case VAR:
+      jj_consume_token(VAR);
+      jj_consume_token(LPAR);
+      t = Exp();
+      jj_consume_token(RPAR);
+                                       t = new ASTVar(t); {if (true) return t;}
+      break;
+    case TIMES:
+      jj_consume_token(TIMES);
+      t = Exp();
+                      {if (true) return new ASTDesref(t);}
       break;
     case MINUS:
       jj_consume_token(MINUS);
       t = Fact();
-                        t = new ASTNegative(t); {if (true) return t;}
+                          t = new ASTNegative(t); {if (true) return t;}
       break;
     case LPAR:
       jj_consume_token(LPAR);
@@ -273,7 +289,7 @@ public class Parser implements ParserConstants {
       jj_la1_init_0();
    }
    private static void jj_la1_init_0() {
-      jj_la1_0 = new int[] {0x600,0x600,0x1800,0x1800,0x78000,0x78000,0x180000,0x180000,0x402510,0x400000,};
+      jj_la1_0 = new int[] {0xc00,0xc00,0x3000,0x3000,0xf0000,0xf0000,0x300000,0x300000,0x1805b10,0x1000000,};
    }
 
   /** Constructor with InputStream. */
@@ -411,7 +427,7 @@ public class Parser implements ParserConstants {
   /** Generate ParseException. */
   static public ParseException generateParseException() {
     jj_expentries.clear();
-    boolean[] la1tokens = new boolean[23];
+    boolean[] la1tokens = new boolean[25];
     if (jj_kind >= 0) {
       la1tokens[jj_kind] = true;
       jj_kind = -1;
@@ -425,7 +441,7 @@ public class Parser implements ParserConstants {
         }
       }
     }
-    for (int i = 0; i < 23; i++) {
+    for (int i = 0; i < 25; i++) {
       if (la1tokens[i]) {
         jj_expentry = new int[1];
         jj_expentry[0] = i;

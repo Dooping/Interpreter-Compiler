@@ -18,7 +18,8 @@ public class ASTDecl implements ASTNode{
 		Environ<IValue> newEnv = env.beginScope();
 		for(Binding decl: decls){
 			IValue idValue = decl.getExpr().eval(env);
-			newEnv.assoc(decl.getID(),idValue);
+			
+			newEnv.assoc(decl.getID(),idValue, decl.getExpr().);
 		}
 		value = expr.eval(newEnv);
 		newEnv.endScope();

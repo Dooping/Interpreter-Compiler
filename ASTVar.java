@@ -6,24 +6,26 @@ public class ASTVar implements ASTNode{
 		this.expr = expr;
 	}
 
-	@Override
-	public IValue eval(Environ<IValue> e) throws UndeclaredIdentifierException,
-			DuplicateIdentifierException {
+	
+	public IValue eval(Environ<IValue> e) throws UndeclaredIdentifierException, DuplicateIdentifierException {
 		IValue val = expr.eval(e);
 		return new RefValue(val);
 	}
 
-	@Override
+	
 	public Type typeCheck(Environ<Type> env) throws TypeErrorException {
-		// TODO Auto-generated method stub
-		return null;
+		return new RefType(expr.typeCheck(env));
 	}
 
-	@Override
+	
 	public void compile(CodeBlock code, CompilerFrame env)
 			throws UndeclaredIdentifierException, DuplicateIdentifierException {
 		// TODO Auto-generated method stub
 		
 	}
+	
+	 public String toString(){
+	    	return "var("+expr.toString()+")";
+	    }
 
 }

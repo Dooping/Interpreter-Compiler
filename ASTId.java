@@ -12,7 +12,21 @@ public class ASTId implements ASTNode{
 	}
 	
 	public Type typeCheck(Environ<Type> env) throws TypeErrorException{
-		//TODO: 
+		try {
+			IValue t = env.find(id);
+			
+			if (t instanceof IntType){
+				return IntType.value;
+			}
+			else if(t instanceof BoolType)
+				return BoolType.value;
+			//TODO: adicionar!
+			//else if(t instanceof RefType)
+				//return 
+	
+		} catch (UndeclaredIdentifierException e) {
+		}
+		
 		return null;
 	}
 	
