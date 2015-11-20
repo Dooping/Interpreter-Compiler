@@ -1,6 +1,7 @@
 
 public class ASTVar implements ASTNode{
 	ASTNode expr;
+	Type type;
 
 	public ASTVar(ASTNode expr) {
 		this.expr = expr;
@@ -14,12 +15,8 @@ public class ASTVar implements ASTNode{
 
 	
 	public Type typeCheck(Environ<Type> env) throws TypeErrorException {
-		
-		RefType t = new RefType(expr.typeCheck(env));
-		
-		//System.out.println(t.getType().toString());
-		
-		return t;
+		type = new RefType(expr.typeCheck(env));
+		return type;
 	}
 
 	
