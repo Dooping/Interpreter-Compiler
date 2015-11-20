@@ -138,10 +138,22 @@ ASTNode Bexp() :
 {Token op;
   ASTNode q1, q2;}
 {
-     q1 = Fact() ( ( op=<AND> | op=<OR> ) q2=Fact()
+     q1 = REF() ( ( op=<AND> | op=<OR> ) q2=REF()
     			 { if (op.kind == AND) 
                          q1 = new ASTAnd(q1,q2);
                    else  q1 = new ASTOr(q1,q2);
+                 }
+                  )*
+     { return q1; } 
+}
+
+ASTNode REF() :
+{Token op;
+  ASTNode q1, q2;}
+{
+     q1 = Fact() ( ( op=<RefAssoc>  ) q2=Fact()
+    			 { 
+                    q1 = new ASTAssign(q1,q2);
                  }
                   )*
      { return q1; } 

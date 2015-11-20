@@ -1,6 +1,7 @@
 
 public class ASTDesref  implements ASTNode{
 	ASTNode expr;
+	Type type;
 	
 	public ASTDesref(ASTNode expr) {
 		this.expr = expr;
@@ -18,16 +19,22 @@ public class ASTDesref  implements ASTNode{
 		//RefType t1 = (RefType) expr.typeCheck(env);
 		//if (t1 instanceof RefType)
 		//System.out.println(expr.getClass().getName());
-		RefType t = (RefType) expr.typeCheck(env);
-			return t.getType();
+		Type t =  expr.typeCheck(env);
+		if(t instanceof RefType){
+			RefType t1 = (RefType)t;
+			type = t1.getType();
+		}
+			
+			return type;
 		//else
 			//throw new TypeErrorException(null);
 	}
 
 	
-	public void compile(CodeBlock code, CompilerFrame env)
-			throws UndeclaredIdentifierException, DuplicateIdentifierException {
-		// TODO Auto-generated method stub
+	public void compile(CodeBlock code, CompilerFrame env)throws UndeclaredIdentifierException, DuplicateIdentifierException {
+		//fazer o expr.compile
+		//ver o tipo para o check cast
+		//getfield
 		
 	}
 	

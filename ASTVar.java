@@ -1,6 +1,7 @@
 
 public class ASTVar implements ASTNode{
 	ASTNode expr;
+	Type type;
 
 	public ASTVar(ASTNode expr) {
 		this.expr = expr;
@@ -13,19 +14,19 @@ public class ASTVar implements ASTNode{
 	}
 
 	
-	public Type typeCheck(Environ<Type> env) throws TypeErrorException {
-		
-		RefType t = new RefType(expr.typeCheck(env));
-		
-		//System.out.println(t.getType().toString());
-		
-		return t;
+	public Type typeCheck(Environ<Type> env) throws TypeErrorException {	
+		return type = new RefType(expr.typeCheck(env));
+		//return type;
 	}
 
 	
-	public void compile(CodeBlock code, CompilerFrame env)
-			throws UndeclaredIdentifierException, DuplicateIdentifierException {
-		// TODO Auto-generated method stub
+	public void compile(CodeBlock code, CompilerFrame env) throws UndeclaredIdentifierException, DuplicateIdentifierException {
+		//code.emitVarRef(type)
+		//para fazer as 4 expressoes iniciais: new_ref, dup, inv...
+		//exp.compile
+		//code.emitPutField(code.RefClassOfType(type), "v",type)
+		//code.RefClassOfType(type) -> dado um tipo, diz a class
+		
 		
 	}
 	
