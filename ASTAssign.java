@@ -4,7 +4,9 @@ public class ASTAssign implements ASTNode{
 	ASTNode left, right;
 
 	public ASTAssign(ASTNode left, ASTNode right) {
+		//um id
 		this.left = left;
+		//um valor
 		this.right = right;
 	}
 

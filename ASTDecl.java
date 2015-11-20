@@ -14,19 +14,34 @@ public class ASTDecl implements ASTNode{
 
 	public IValue eval(Environ<IValue> env) throws UndeclaredIdentifierException, DuplicateIdentifierException{
 		IValue value;
+		
 		//novo ambiente
 		Environ<IValue> newEnv = env.beginScope();
 		for(Binding decl: decls){
 			IValue idValue = decl.getExpr().eval(env);
-			
-			newEnv.assoc(decl.getID(),idValue, decl.getExpr().);
+			newEnv.assoc(decl.getID(),idValue);
 		}
+		
 		value = expr.eval(newEnv);
 		newEnv.endScope();
 		return value;
 	}
 	public Type typeCheck(Environ<Type> env) throws TypeErrorException{
-		return expr.typeCheck(env);
+		Type value;
+		Environ<Type> newEnv = env.beginScope();
+		for(Binding decl: decls){
+			Type idType = decl.getExpr().typeCheck(newEnv);
+			try {
+				newEnv.assocType(decl.getID(),idType);
+			} catch (DuplicateIdentifierException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	
+		value = expr.typeCheck(newEnv);
+		newEnv.endScope();
+		return value;
 	}
 
 	@SuppressWarnings("static-access")

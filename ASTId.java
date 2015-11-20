@@ -12,9 +12,12 @@ public class ASTId implements ASTNode{
 	}
 	
 	public Type typeCheck(Environ<Type> env) throws TypeErrorException{
+		//System.out.println(id);
+		Type t = null;
 		try {
-			IValue t = env.find(id);
-			
+			t = env.findType(id);
+			/*
+			//stem.out.println(t.getClass().getName());
 			if (t instanceof IntType){
 				return IntType.value;
 			}
@@ -23,11 +26,12 @@ public class ASTId implements ASTNode{
 			//TODO: adicionar!
 			//else if(t instanceof RefType)
 				//return 
-	
+	*/
 		} catch (UndeclaredIdentifierException e) {
+			//System.out.println("NULL");
 		}
 		
-		return null;
+		return t;
 	}
 	
 

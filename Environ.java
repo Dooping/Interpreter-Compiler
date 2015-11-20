@@ -7,11 +7,15 @@ public class Environ<T> {
 		String id;
 		IValue value;
 		Type type;
-		
-		public Assoc(String id, IValue value, Type type){
+
+		public Assoc(String id, IValue value){
 			this.id=id;
 			this.value=value;
-			this.type=type;
+		}
+		
+		public Assoc(String id, Type type){
+			this.id = id;
+			this.type = type;
 		}
 	}
 	
@@ -33,26 +37,28 @@ public class Environ<T> {
 		ArrayList<Assoc> teste = this.assocs;
 
 		while (current != null ){
+			teste = current.getAssoc();
 			for(Assoc assoc: teste)
 				if(assoc.id.equals(id))
 					return assoc.value;
 			current = current.up;
-			teste = current.getAssoc();
+			
 		}throw new UndeclaredIdentifierException(id);
 	}
-	/*
+	
 	Type findType(String id) throws UndeclaredIdentifierException{
 		Environ<T> current = this;
 		ArrayList<Assoc> teste = this.assocs;
 
 		while (current != null ){
+			teste = current.getAssoc();
 			for(Assoc assoc: teste)
 				if(assoc.id.equals(id))
-					return assoc.
+					return assoc.type;
 			current = current.up;
-			teste = current.getAssoc();
+			
 		}throw new UndeclaredIdentifierException(id);
-	}*/
+	}
 	
 	public ArrayList<Assoc> getAssoc (){
 		return assocs;
@@ -66,12 +72,19 @@ public class Environ<T> {
 		return up;
 	}
 	
-	void assoc(String id, IValue value, Type type) throws DuplicateIdentifierException{
+	void assocType(String id, Type type) throws DuplicateIdentifierException{
 			for (Assoc assoc: assocs)
 				if(assoc.id.equals(id))
 					throw new DuplicateIdentifierException(id);
-			assocs.add(new Assoc(id,value,type));
+			assocs.add(new Assoc(id,type));
 	}
+	
+	void assoc(String id, IValue value) throws DuplicateIdentifierException{
+		for (Assoc assoc: assocs)
+			if(assoc.id.equals(id))
+				throw new DuplicateIdentifierException(id);
+		assocs.add(new Assoc(id,value));
+}
 }
 
 

@@ -13,11 +13,15 @@ public class ASTDesref  implements ASTNode{
 
 	
 	public Type typeCheck(Environ<Type> env) throws TypeErrorException {
-		RefType t1 = (RefType) expr.typeCheck(env);
-		if (t1 instanceof RefType)
-			return expr.typeCheck(env);
-		else
-			throw new TypeErrorException(null);
+		//temos de fazer o check type ao que está dentro do Id, não ao id
+		//o ASTId nunca sera do tipo RefType!!!
+		//RefType t1 = (RefType) expr.typeCheck(env);
+		//if (t1 instanceof RefType)
+		//System.out.println(expr.getClass().getName());
+		RefType t = (RefType) expr.typeCheck(env);
+			return t.getType();
+		//else
+			//throw new TypeErrorException(null);
 	}
 
 	

@@ -14,7 +14,12 @@ public class ASTVar implements ASTNode{
 
 	
 	public Type typeCheck(Environ<Type> env) throws TypeErrorException {
-		return new RefType(expr.typeCheck(env));
+		
+		RefType t = new RefType(expr.typeCheck(env));
+		
+		//System.out.println(t.getType().toString());
+		
+		return t;
 	}
 
 	

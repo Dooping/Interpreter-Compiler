@@ -216,8 +216,8 @@ public class Parser implements ParserConstants {
       break;
     case TIMES:
       jj_consume_token(TIMES);
-      t = Exp();
-                      {if (true) return new ASTDesref(t);}
+      t = Fact();
+                       {if (true) return new ASTDesref(t);}
       break;
     case MINUS:
       jj_consume_token(MINUS);

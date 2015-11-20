@@ -10,6 +10,10 @@ ASTNode left, right;
 	public Type typeCheck(Environ<Type> env) throws TypeErrorException{
 		Type t1 = left.typeCheck(env);
 		Type t2 = right.typeCheck(env);
+		//System.out.println(left.getClass().getName());
+		//if(t1 == null)
+			//System.out.println("kdshghsb"+t1);
+		//System.out.println(left.typeCheck(env) + " " + right.typeCheck(env));
 		if (t1==IntType.value && t2==IntType.value)
 			return IntType.value;
 		else

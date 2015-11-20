@@ -42,6 +42,8 @@ TOKEN :
   |
   < ASSOC : "=" >
   |
+  < RefAssoc : ":=" >
+  |
   < BOOL : "true"|"false" >
   | 
   < Num: (["0"-"9"]) + >
@@ -154,7 +156,7 @@ ASTNode Fact() :
     n=<Num> { t = new ASTNum(Integer.parseInt(n.image)); return t; }
    |n=< BOOL >  { t = new ASTBool(Boolean.parseBoolean(n.image)); return t; }
    | < VAR ><LPAR > t=Exp() < RPAR > { t = new ASTVar(t); return t; }
-   | <TIMES>t=Exp() { return new ASTDesref(t);}
+   | <TIMES>t=Fact() { return new ASTDesref(t);}
    | < MINUS > t=Fact() { t = new ASTNegative(t); return t; }
    | <LPAR> t=Exp() <RPAR> { return t; }
    | n = <Id> { return new ASTId(n.image); }
