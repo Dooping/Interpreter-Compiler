@@ -32,6 +32,9 @@ public class ASTBigger implements ASTNode{
  	}
 
 	public void compile(CodeBlock code, CompilerFrame env)throws UndeclaredIdentifierException, DuplicateIdentifierException  {
+		left.compile(code, env);
+		right.compile(code, env);
+		code.emit_compMaior();
 	}
 
 }

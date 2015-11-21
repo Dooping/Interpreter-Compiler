@@ -52,6 +52,7 @@ public class ASTDecl implements ASTNode{
 		int i = 1;
 		for(Binding decl: decls){
 			decl.getExpr().compile(code,env);
+			//TODO:mudar do "I" para o type
 			code.emit_putField(scope.getType(), decl.getID(), "I");
 			scope.assoc(decl.getID());
 			if(i < decls.size()){

@@ -1,14 +1,41 @@
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
-
 public class CodeBlock {
 	ArrayList<CompilerFrame> frames;
 	ArrayList<String> code;
+	static int currentLabel = 0;
 	
 	CodeBlock(){
 		code = new ArrayList<String>();
 		frames = new ArrayList<CompilerFrame>();
+	}
+	
+	/*
+	 * 
+	 * [[E1]]D
+[[E2]]D
+isub
+ifgt L1
+sipush 0
+goto L2
+L1: sipush 1
+L2:
+	 */
+	private int labelGenarator(){
+		return currentLabel++;
+	}
+	
+	void emit_compMaior(){
+		code.add("isub");
+		int label = this.labelGenarator();
+		code.add("if_icmpgt L_" + label);
+		emit_push(0);
+		int label2 = this.labelGenarator();
+		code.add("goto L_" + label2);
+		code.add("L_" + label + ":");
+		emit_push(1);
+		code.add("L_" + label2+":");
 	}
 	
 	void emit_push(int n){
@@ -63,18 +90,6 @@ public class CodeBlock {
 	}
 	
 	void endFrame(int frame, int father){
-		//comment("end frame: " + frame);
-		///emit_aload();
-		//code.add("checkcast frame_" + frame);
-		//if(frame != 1){
-		//	code.add("getfield frame_" + frame + "/SL Lframe_" + father + ";");
-		//	emit_astore();
-		//}
-		//else{
-		//	code.add("aconst_null");
-		//	emit_astore();
-		//}
-		
 		if(frame == 1){
 			code.add("aconst_null");
 			emit_astore();
@@ -143,9 +158,6 @@ public class CodeBlock {
 	}
 	
 	public void dump(){
-		//dumpHeader();
-		//dumpCode();
-		//dumpFooter();
 		createDemo();
 		createFrames();
 		createInterface();

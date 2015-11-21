@@ -23,7 +23,8 @@ public class ASTBool implements ASTNode {
 
 	
 	public void compile(CodeBlock code, CompilerFrame env)throws UndeclaredIdentifierException, DuplicateIdentifierException  {
-		//code.emit_push(val);
+		if(val) code.emit_push(1);
+		else code.emit_push(0);
 	}
 
 }
