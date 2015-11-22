@@ -38,6 +38,14 @@ L2:
 		code.add("L_" + label2+":");
 	}
 	
+	void emit_and(){
+		code.add("iand");
+	}
+	
+	void emit_or(){
+		code.add("ior");
+	}
+	
 	void emit_push(int n){
 		code.add("sipush "+n);
 	}
