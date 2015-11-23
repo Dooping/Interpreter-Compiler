@@ -4,43 +4,18 @@ import java.util.ArrayList;
 public class CodeBlock {
 	ArrayList<CompilerFrame> frames;
 	ArrayList<String> code;
-	static int currentLabel = 0;
+	static int currentLabel;
 	
 	CodeBlock(){
 		code = new ArrayList<String>();
 		frames = new ArrayList<CompilerFrame>();
+		currentLabel = 0;
 	}
 	
-	/*
-	 * 
-	 * [[E1]]D
-[[E2]]D
-isub
-ifgt L1
-sipush 0
-goto L2
-L1: sipush 1
-L2:
-	 */
 	private int labelGenarator(){
 		return currentLabel++;
 	}
 	
-	//Não funciona!
-	/*//pelo lab
-	void emit_compMaior(){
-		code.add("isub");
-		int label = this.labelGenarator();
-		code.add("if_icmpgt L_" + label);
-		emit_push(0);
-		int label2 = this.labelGenarator();
-		code.add("goto L_" + label2);
-		code.add("L_" + label + ":");
-		emit_push(1);
-		code.add("L_" + label2+":");
-	}*/
-	
-	//versao dos slides
 	void emit_compare(){
 		code.add("isub");
 		int label = this.labelGenarator();
@@ -124,6 +99,13 @@ L2:
 		code.add("putfield frame_" + frame + "/loc_" + id + " " + type);
 	}
 	
+	void emit_refInt(){
+		code.add("new ref_int");
+		code.add("dup");
+		code.add("invokespecial ref_int/<init>()V");
+		code.add("dup");	
+	}
+	
 	void emit_putFieldRefInt(){
 		code.add("putfield ref_int/v I");
 	}
@@ -155,12 +137,7 @@ L2:
 		creatRefInt();
 	}
 
-	void emit_refInt(){
-		code.add("new ref_int");
-		code.add("dup");
-		code.add("invokespecial ref_int/<init>()V");
-		code.add("dup");	
-	}
+
 	//Criar ficheiros
 	void createDemo(){
 		try{

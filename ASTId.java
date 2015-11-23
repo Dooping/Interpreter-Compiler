@@ -37,6 +37,7 @@ public class ASTId implements ASTNode{
 
 
 	public void compile(CodeBlock code, CompilerFrame env)throws UndeclaredIdentifierException, DuplicateIdentifierException {
+		
 		code.comment("get a value");
 		code.loadFrame(env);
 		CompilerFrame frame = env;

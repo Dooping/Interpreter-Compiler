@@ -12,7 +12,7 @@ public class Parser implements ParserConstants {
     while (true) {
     try {
     exp = parser.Start();
-        exp.typeCheck(new Environ<Type>());
+        //exp.typeCheck(new Environ<Type>());
    System.out.println( exp.toString() + " = " + exp.eval(new Environ<IValue>()) );
     } catch (Exception e) {
       System.out.println ("Syntax Error!");
@@ -219,7 +219,7 @@ public class Parser implements ParserConstants {
 
   static final public ASTNode Fact() throws ParseException {
   Token n;
-  ASTNode t;
+  ASTNode t, t1;
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case Num:
       n = jj_consume_token(Num);
@@ -259,6 +259,14 @@ public class Parser implements ParserConstants {
     case DECL:
       t = Decl();
                     {if (true) return t;}
+      break;
+    case WHILE:
+      jj_consume_token(WHILE);
+      t = Exp();
+      jj_consume_token(DO);
+      t1 = Exp();
+      jj_consume_token(END);
+     t = new ASTWhile(t,t1); {if (true) return t;}
       break;
     default:
       jj_la1[9] = jj_gen;
@@ -311,7 +319,7 @@ public class Parser implements ParserConstants {
       jj_la1_init_0();
    }
    private static void jj_la1_init_0() {
-      jj_la1_0 = new int[] {0x1800,0x1800,0x6000,0x6000,0x1e0000,0x1e0000,0x600000,0x600000,0x100,0x300b610,0x2000000,};
+      jj_la1_0 = new int[] {0x6000,0x6000,0x18000,0x18000,0x780000,0x780000,0x1800000,0x1800000,0x400,0xc02d890,0x8000000,};
    }
 
   /** Constructor with InputStream. */
@@ -449,7 +457,7 @@ public class Parser implements ParserConstants {
   /** Generate ParseException. */
   static public ParseException generateParseException() {
     jj_expentries.clear();
-    boolean[] la1tokens = new boolean[26];
+    boolean[] la1tokens = new boolean[28];
     if (jj_kind >= 0) {
       la1tokens[jj_kind] = true;
       jj_kind = -1;
@@ -463,7 +471,7 @@ public class Parser implements ParserConstants {
         }
       }
     }
-    for (int i = 0; i < 26; i++) {
+    for (int i = 0; i < 28; i++) {
       if (la1tokens[i]) {
         jj_expentry = new int[1];
         jj_expentry[0] = i;

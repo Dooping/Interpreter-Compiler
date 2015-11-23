@@ -12,7 +12,7 @@ public class Parser {
     while (true) {
     try {
     exp = parser.Start();
-	exp.typeCheck(new Environ<Type>());
+	//exp.typeCheck(new Environ<Type>());
    System.out.println( exp.toString() + " = " + exp.eval(new Environ<IValue>()) );
     } catch (Exception e) {
       System.out.println ("Syntax Error!");
@@ -39,6 +39,10 @@ TOKEN :
   < IN : "in" >
    |
   < END : "end" >
+  |
+  < WHILE : "while" >
+  |
+  < DO : "do" >
   |
   < ASSOC : "=" >
   |
@@ -162,7 +166,7 @@ ASTNode REF() :
 
 ASTNode Fact() :
 { Token n; 
-  ASTNode t;}
+  ASTNode t, t1;}
 {
 
     n=<Num> { t = new ASTNum(Integer.parseInt(n.image)); return t; }
@@ -172,7 +176,8 @@ ASTNode Fact() :
    | < MINUS > t=Fact() { t = new ASTNegative(t); return t; }
    | <LPAR> t=Exp() <RPAR> { return t; }
    | n = <Id> { return new ASTId(n.image); }
-   | t = Decl() {   return t; }   
+   | t = Decl() {   return t; }
+   | <WHILE> t = Exp() <DO> t1 = Exp()  <END> { t = new ASTWhile(t,t1); return t;}      
 }
 
 ASTNode Decl():
