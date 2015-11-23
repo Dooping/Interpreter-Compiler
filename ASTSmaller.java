@@ -32,6 +32,11 @@ public class ASTSmaller implements ASTNode{
  	}
 
 	public void compile(CodeBlock code, CompilerFrame env)throws UndeclaredIdentifierException, DuplicateIdentifierException  {
+		right.compile(code, env);
+		left.compile(code, env);
+		//NOTA: o codeBlock tem codigo para x>y, para tal, reutiliza-se este codigo,
+		//trocando os nós, em vez x<y, fazemos, y>x!
+		code.emit_compare();
 	}
 
 }

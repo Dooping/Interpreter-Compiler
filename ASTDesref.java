@@ -14,11 +14,6 @@ public class ASTDesref  implements ASTNode{
 
 	
 	public Type typeCheck(Environ<Type> env) throws TypeErrorException {
-		//temos de fazer o check type ao que está dentro do Id, não ao id
-		//o ASTId nunca sera do tipo RefType!!!
-		//RefType t1 = (RefType) expr.typeCheck(env);
-		//if (t1 instanceof RefType)
-		//System.out.println(expr.getClass().getName());
 		Type t =  expr.typeCheck(env);
 		if(t instanceof RefType){
 			RefType t1 = (RefType)t;
@@ -35,7 +30,9 @@ public class ASTDesref  implements ASTNode{
 		//fazer o expr.compile
 		//ver o tipo para o check cast
 		//getfield
-		
+		expr.compile(code, env);
+		code.emit_CheckCastRefInt();
+		code.emit_getFieldForRefInt();
 	}
 	
 	 public String toString(){

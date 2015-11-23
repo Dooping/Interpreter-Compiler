@@ -16,7 +16,6 @@ public class ASTVar implements ASTNode{
 	
 	public Type typeCheck(Environ<Type> env) throws TypeErrorException {	
 		return type = new RefType(expr.typeCheck(env));
-		//return type;
 	}
 
 	
@@ -27,6 +26,10 @@ public class ASTVar implements ASTNode{
 		//code.emitPutField(code.RefClassOfType(type), "v",type)
 		//code.RefClassOfType(type) -> dado um tipo, diz a class
 		
+		//So para int, por enquanto
+		code.emit_refInt();
+		expr.compile(code, env);
+		code.emit_putFieldRefInt();
 		
 	}
 	

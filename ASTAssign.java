@@ -40,9 +40,11 @@ public class ASTAssign implements ASTNode{
 	    	return left.toString() + ":=" + right.toString();
 	    }
 	
-	public void compile(CodeBlock code, CompilerFrame env)
-			throws UndeclaredIdentifierException, DuplicateIdentifierException {
-		// TODO Auto-generated method stub
+	public void compile(CodeBlock code, CompilerFrame env) throws UndeclaredIdentifierException, DuplicateIdentifierException {
+		left.compile(code, env);
+		code.emit_CheckCastRefInt();
+		right.compile(code, env);
+		code.emit_putFieldRefInt();
 		
 	}
 

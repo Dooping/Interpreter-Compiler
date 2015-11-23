@@ -26,10 +26,25 @@ L2:
 		return currentLabel++;
 	}
 	
+	//Não funciona!
+	/*//pelo lab
 	void emit_compMaior(){
 		code.add("isub");
 		int label = this.labelGenarator();
 		code.add("if_icmpgt L_" + label);
+		emit_push(0);
+		int label2 = this.labelGenarator();
+		code.add("goto L_" + label2);
+		code.add("L_" + label + ":");
+		emit_push(1);
+		code.add("L_" + label2+":");
+	}*/
+	
+	//versao dos slides
+	void emit_compare(){
+		code.add("isub");
+		int label = this.labelGenarator();
+		code.add("ifgt L_" + label);
 		emit_push(0);
 		int label2 = this.labelGenarator();
 		code.add("goto L_" + label2);
@@ -109,6 +124,18 @@ L2:
 		code.add("putfield frame_" + frame + "/loc_" + id + " " + type);
 	}
 	
+	void emit_putFieldRefInt(){
+		code.add("putfield ref_int/v I");
+	}
+	
+	void emit_CheckCastRefInt(){
+		code.add("checkcast ref_int");
+	}
+	
+	void emit_getFieldForRefInt(){
+		code.add("getfield ref_int/v I");
+	}
+	
 	void emit_aload(){
 		code.add("aload 1");
 	}
@@ -121,56 +148,19 @@ L2:
 		code.add("dup");
 	}
 	
-	void dumpHeader(){
-		System.out.println(".class public Demo");
-		System.out.println(".super java/lang/Object");
-		System.out.println("; standard initializer");
-		System.out.println(".method public <init>()V");
-		System.out.println("   aload_0");
-		System.out.println("   invokenonvirtual java/lang/Object/<init>()V");
-		System.out.println("   return");
-		System.out.println(".end method");
-		System.out.println("");
-		System.out.println(".method public static main([Ljava/lang/String;)V");
-		System.out.println("       ; set limits used by this method");
-		System.out.println("       .limit locals 10	");
-		System.out.println("       .limit stack 256");
-		System.out.println("");
-		System.out.println("       ; setup local variables:");
-		System.out.println("");
-		System.out.println("       ;    1 - the PrintStream object held in java.lang.System.out");
-		System.out.println("       getstatic java/lang/System/out Ljava/io/PrintStream;");
-		System.out.println("");
-		System.out.println("       ; place your bytecodes here");
-		System.out.println("       ; START");
-	}
-
-	void dumpFooter(){
-
-		System.out.println("	       ; END");
-		System.out.println("");
-		System.out.println("");
-		System.out.println("	       ; convert to String;");
-		System.out.println("	       invokestatic java/lang/String/valueOf(I)Ljava/lang/String;");
-		System.out.println("	       ; call println ");
-		System.out.println("	       invokevirtual java/io/PrintStream/println(Ljava/lang/String;)V");
-		System.out.println("");
-		System.out.println("	       return");
-		System.out.println("");
-		System.out.println("	.end method");
-	}
-
-	void dumpCode(){
-		for (String s : code)
-			System.out.println(s);
-	}
-	
 	public void dump(){
 		createDemo();
 		createFrames();
 		createInterface();
+		creatRefInt();
 	}
 
+	void emit_refInt(){
+		code.add("new ref_int");
+		code.add("dup");
+		code.add("invokespecial ref_int/<init>()V");
+		code.add("dup");	
+	}
 	//Criar ficheiros
 	void createDemo(){
 		try{
@@ -183,6 +173,8 @@ L2:
 			//e.printStackTrace();
 		}
 	}
+	
+
 	
 	void createHeader(PrintWriter out){
 		out.println(".class public Demo");
@@ -256,6 +248,19 @@ L2:
 			}catch(Exception e){
 				//e.printStackTrace();
 			}
+		}
+	}
+	
+	void creatRefInt(){
+		try{
+			PrintWriter out = new PrintWriter("ref_int.j");
+			out.println(".class ref_int");
+			out.println(".super java/lang/Object");
+			out.println(".field public v I;");
+			out.println(".end method");
+			out.close();
+		} catch (Exception e){
+			//e.printStackTrace();
 		}
 	}
 	
