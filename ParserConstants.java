@@ -23,39 +23,41 @@ public interface ParserConstants {
   /** RegularExpression Id. */
   int RefAssoc = 10;
   /** RegularExpression Id. */
-  int BOOL = 11;
+  int TWOEXPR = 11;
   /** RegularExpression Id. */
-  int Num = 12;
+  int BOOL = 12;
   /** RegularExpression Id. */
-  int PLUS = 13;
+  int Num = 13;
   /** RegularExpression Id. */
-  int MINUS = 14;
+  int PLUS = 14;
   /** RegularExpression Id. */
-  int TIMES = 15;
+  int MINUS = 15;
   /** RegularExpression Id. */
-  int DIV = 16;
+  int TIMES = 16;
   /** RegularExpression Id. */
-  int LPAR = 17;
+  int DIV = 17;
   /** RegularExpression Id. */
-  int RPAR = 18;
+  int LPAR = 18;
   /** RegularExpression Id. */
-  int BIGGER = 19;
+  int RPAR = 19;
   /** RegularExpression Id. */
-  int SMALLER = 20;
+  int BIGGER = 20;
   /** RegularExpression Id. */
-  int EQUALS = 21;
+  int SMALLER = 21;
   /** RegularExpression Id. */
-  int DIF = 22;
+  int EQUALS = 22;
   /** RegularExpression Id. */
-  int AND = 23;
+  int DIF = 23;
   /** RegularExpression Id. */
-  int OR = 24;
+  int AND = 24;
   /** RegularExpression Id. */
-  int EL = 25;
+  int OR = 25;
   /** RegularExpression Id. */
-  int VAR = 26;
+  int EL = 26;
   /** RegularExpression Id. */
-  int Id = 27;
+  int VAR = 27;
+  /** RegularExpression Id. */
+  int Id = 28;
 
   /** Lexical state. */
   int DEFAULT = 0;
@@ -73,6 +75,7 @@ public interface ParserConstants {
     "\"do\"",
     "\"=\"",
     "\":=\"",
+    "\";\"",
     "<BOOL>",
     "<Num>",
     "\"+\"",

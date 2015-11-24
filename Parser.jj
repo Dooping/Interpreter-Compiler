@@ -49,7 +49,7 @@ TOKEN :
   < RefAssoc : ":=" >
   |
   < TWOEXPR : ";" >
-   |
+  |
   < BOOL : "true"|"false" >
   | 
   < Num: (["0"-"9"]) + >
@@ -87,8 +87,18 @@ TOKEN :
 
 ASTNode Start():
 { ASTNode t; }{
-  t = Exp() <EL> 
+  t = Texp() <EL> 
   {return t; }
+}
+
+ASTNode Texp():
+{ Token op;
+  ASTNode t1, t2; }
+{
+     t1=Exp() (  op=<TWOEXPR>  t2=Exp() 
+               { t1 = new ASTTwoExpr(t1,t2); }
+               ) *
+     { return t1; } 
 }
 
 ASTNode Exp():
@@ -173,13 +183,13 @@ ASTNode Fact() :
 
     n=<Num> { t = new ASTNum(Integer.parseInt(n.image)); return t; }
    |n=< BOOL >  { t = new ASTBool(Boolean.parseBoolean(n.image)); return t; }
-   | < VAR ><LPAR > t=Exp() < RPAR > { t = new ASTVar(t); return t; }
+   | < VAR ><LPAR > t=Texp() < RPAR > { t = new ASTVar(t); return t; }
    | <TIMES>t=Fact() { return new ASTDesref(t);}
    | < MINUS > t=Fact() { t = new ASTNegative(t); return t; }
-   | <LPAR> t=Exp() <RPAR> { return t; }
+   | <LPAR> t=Texp() <RPAR> { return t; }
    | n = <Id> { return new ASTId(n.image); }
    | t = Decl() {   return t; }
-   | <WHILE> t = Exp() <DO> t1 = Exp()  <END> { t = new ASTWhile(t,t1); return t;}      
+   | <WHILE> t = Texp() <DO> t1 = Texp()  <END> { t = new ASTWhile(t,t1); return t;}      
 }
 
 ASTNode Decl():
