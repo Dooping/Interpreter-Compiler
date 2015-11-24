@@ -12,7 +12,7 @@ public class Parser implements ParserConstants {
     while (true) {
     try {
     exp = parser.Start();
-        //exp.typeCheck(new Environ<Type>());
+        exp.typeCheck(new Environ<Type>());
    System.out.println( exp.toString() + " = " + exp.eval(new Environ<IValue>()) );
     } catch (Exception e) {
       System.out.println ("Syntax Error!");
@@ -266,7 +266,7 @@ public class Parser implements ParserConstants {
       jj_consume_token(DO);
       t1 = Exp();
       jj_consume_token(END);
-     t = new ASTWhile(t,t1); {if (true) return t;}
+                                                t = new ASTWhile(t,t1); {if (true) return t;}
       break;
     default:
       jj_la1[9] = jj_gen;

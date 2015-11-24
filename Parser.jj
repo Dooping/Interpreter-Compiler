@@ -12,7 +12,7 @@ public class Parser {
     while (true) {
     try {
     exp = parser.Start();
-	//exp.typeCheck(new Environ<Type>());
+	exp.typeCheck(new Environ<Type>());
    System.out.println( exp.toString() + " = " + exp.eval(new Environ<IValue>()) );
     } catch (Exception e) {
       System.out.println ("Syntax Error!");
@@ -48,6 +48,8 @@ TOKEN :
   |
   < RefAssoc : ":=" >
   |
+  < TWOEXPR : ";" >
+   |
   < BOOL : "true"|"false" >
   | 
   < Num: (["0"-"9"]) + >

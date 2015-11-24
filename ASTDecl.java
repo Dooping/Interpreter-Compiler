@@ -34,8 +34,7 @@ public class ASTDecl implements ASTNode{
 			try {
 				newEnv.assocType(decl.getID(),idType);
 			} catch (DuplicateIdentifierException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				//e.printStackTrace();
 			}
 		}
 	
