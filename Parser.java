@@ -307,7 +307,7 @@ public class Parser implements ParserConstants {
     while (true) {
       x = jj_consume_token(Id);
       jj_consume_token(ASSOC);
-      t1 = Exp();
+      t1 = Texp();
    bindings.add(new Binding (x.image, t1));
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case Id:

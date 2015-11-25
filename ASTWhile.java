@@ -24,8 +24,13 @@ public class ASTWhile implements ASTNode{
 	}
 
 	public void compile(CodeBlock code, CompilerFrame env)throws UndeclaredIdentifierException, DuplicateIdentifierException {
-
-		
+		int label = code.labelGenarator();
+		code.emit_label(label);
+		clause.compile(code, env);
+		int label2 = code.labelGenarator();
+		code.emit_ifeq(label2);
+		body.compile(code, env);
+		code.emit_goto(label, label2);
 	}
 	
 	public String toString(){

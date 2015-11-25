@@ -12,8 +12,21 @@ public class CodeBlock {
 		currentLabel = 0;
 	}
 	
-	private int labelGenarator(){
+	int labelGenarator(){
 		return currentLabel++;
+	}
+
+	void emit_label (int label){
+		code.add("L" + label + ":");
+	}
+	
+	void emit_ifeq(int label){
+		code.add("ifeq L" + label);
+	}
+	
+	void emit_goto(int label1, int label2){
+		code.add("goto L" + label1);
+		code.add("L" + label2);
 	}
 	
 	void emit_compare(){

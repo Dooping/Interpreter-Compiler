@@ -12,22 +12,20 @@ public class ASTTwoExpr implements ASTNode{
 	public IValue eval(Environ<IValue> e) throws UndeclaredIdentifierException,DuplicateIdentifierException {
 		l = left.eval(e);
 		r = right.eval(e);
-		//TODO: returnar o que?
-		return null;
+		return r;
 	}
 
 	public Type typeCheck(Environ<Type> env) throws TypeErrorException {
-		// TODO: typeCheck de qual?!
-		return null;
+		return right.typeCheck(env);
 	}
 
 	public void compile(CodeBlock code, CompilerFrame env)throws UndeclaredIdentifierException, DuplicateIdentifierException {
-		// TODO Auto-generated method stub
-		
+		left.compile(code, env);
+		right.compile(code, env);
 	}
 	
 	public String toString(){
-		return left.toString() + "=" +  " " + right.toString();
+		return left.toString()+" AND "  + right.toString() + " ";
 	}
 
 }
