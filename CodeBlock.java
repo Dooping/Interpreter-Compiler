@@ -27,6 +27,18 @@ public class CodeBlock {
 		code.add("goto L" + label1);
 	}
 	
+	void emit_equals(){
+		code.add("isub");
+		int label = this.labelGenarator();
+		code.add("ifeq L_" + label);
+		emit_push(0);
+		int label2 = this.labelGenarator();
+		code.add("goto L_" + label2);
+		code.add("L_" + label + ":");
+		emit_push(1);
+		code.add("L_" + label2+":");
+	}
+	
 	void emit_compare(){
 		code.add("isub");
 		int label = this.labelGenarator();

@@ -33,6 +33,9 @@ public class ASTEquals implements ASTNode{
 
 	public void compile(CodeBlock code, CompilerFrame env)throws UndeclaredIdentifierException, DuplicateIdentifierException  {
 	//TODO: fazer compile
+		left.compile(code, env);
+		right.compile(code, env);
+		code.emit_equals();
 		//subtrair, se for zero, sair 1, cc 0
 	}
 
