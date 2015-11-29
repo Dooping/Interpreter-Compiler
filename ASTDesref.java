@@ -19,8 +19,7 @@ public class ASTDesref  implements ASTNode{
 			RefType t1 = (RefType)t;
 			type = t1.getType();
 		}
-			
-			return type;
+		return type;
 		//else
 			//throw new TypeErrorException(null);
 	}
@@ -31,8 +30,8 @@ public class ASTDesref  implements ASTNode{
 		//ver o tipo para o check cast
 		//getfield
 		expr.compile(code, env);
-		code.emit_CheckCastRefInt();
-		code.emit_getFieldForRefInt();
+		code.emit_CheckCastRefClass();
+		code.emit_getFieldForRefClass();
 	}
 	
 	 public String toString(){

@@ -241,7 +241,7 @@ public class Parser implements ParserConstants {
 
   static final public ASTNode Fact() throws ParseException {
   Token n;
-  ASTNode t, t1;
+  ASTNode t, t1,t2;
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case Num:
       n = jj_consume_token(Num);
@@ -290,6 +290,16 @@ public class Parser implements ParserConstants {
       jj_consume_token(END);
                                                   t = new ASTWhile(t,t1); {if (true) return t;}
       break;
+    case IF:
+      jj_consume_token(IF);
+      t = Texp();
+      jj_consume_token(THEN);
+      t1 = Texp();
+      jj_consume_token(ELSE);
+      t2 = Texp();
+      jj_consume_token(END);
+                                                                    t = new ASTIf(t,t1,t2); {if (true) return t;}
+      break;
     default:
       jj_la1[10] = jj_gen;
       jj_consume_token(-1);
@@ -337,11 +347,16 @@ public class Parser implements ParserConstants {
   static private int jj_gen;
   static final private int[] jj_la1 = new int[12];
   static private int[] jj_la1_0;
+  static private int[] jj_la1_1;
   static {
       jj_la1_init_0();
+      jj_la1_init_1();
    }
    private static void jj_la1_init_0() {
-      jj_la1_0 = new int[] {0x800,0xc000,0xc000,0x30000,0x30000,0xf00000,0xf00000,0x3000000,0x3000000,0x400,0x1805b090,0x10000000,};
+      jj_la1_0 = new int[] {0x8000,0xc0000,0xc0000,0x300000,0x300000,0xf000000,0xf000000,0x30000000,0x30000000,0x4000,0x805b0890,0x0,};
+   }
+   private static void jj_la1_init_1() {
+      jj_la1_1 = new int[] {0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x1,0x1,};
    }
 
   /** Constructor with InputStream. */
@@ -479,7 +494,7 @@ public class Parser implements ParserConstants {
   /** Generate ParseException. */
   static public ParseException generateParseException() {
     jj_expentries.clear();
-    boolean[] la1tokens = new boolean[29];
+    boolean[] la1tokens = new boolean[33];
     if (jj_kind >= 0) {
       la1tokens[jj_kind] = true;
       jj_kind = -1;
@@ -490,10 +505,13 @@ public class Parser implements ParserConstants {
           if ((jj_la1_0[i] & (1<<j)) != 0) {
             la1tokens[j] = true;
           }
+          if ((jj_la1_1[i] & (1<<j)) != 0) {
+            la1tokens[32+j] = true;
+          }
         }
       }
     }
-    for (int i = 0; i < 29; i++) {
+    for (int i = 0; i < 33; i++) {
       if (la1tokens[i]) {
         jj_expentry = new int[1];
         jj_expentry[0] = i;

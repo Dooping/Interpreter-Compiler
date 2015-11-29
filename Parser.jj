@@ -44,7 +44,15 @@ TOKEN :
   |
   < DO : "do" >
   |
+  < FUNCTION : "fun" >
+  |
   < ASSOC : "=" >
+  |
+  < IF : "if" >
+  |
+  < THEN : "then" >
+  |
+  < ELSE : "else" >
   |
   < RefAssoc : ":=" >
   |
@@ -178,7 +186,7 @@ ASTNode REF() :
 
 ASTNode Fact() :
 { Token n; 
-  ASTNode t, t1;}
+  ASTNode t, t1,t2;}
 {
 
     n=<Num> { t = new ASTNum(Integer.parseInt(n.image)); return t; }
@@ -189,7 +197,8 @@ ASTNode Fact() :
    | <LPAR> t=Texp() <RPAR> { return t; }
    | n = <Id> { return new ASTId(n.image); }
    | t = Decl() {   return t; }
-   | <WHILE> t = Texp() <DO> t1 = Texp()  <END> { t = new ASTWhile(t,t1); return t;}      
+   | <WHILE> t = Texp() <DO> t1 = Texp()  <END> { t = new ASTWhile(t,t1); return t;}
+   | <IF> t = Texp() <THEN> t1 = Texp()  <ELSE> t2=Texp() < END > { t = new ASTIf(t,t1,t2); return t;}         
 }
 
 ASTNode Decl():

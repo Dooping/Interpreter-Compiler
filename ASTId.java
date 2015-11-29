@@ -16,17 +16,6 @@ public class ASTId implements ASTNode{
 		Type t = null;
 		try {
 			t = env.findType(id);
-			/*
-			//stem.out.println(t.getClass().getName());
-			if (t instanceof IntType){
-				return IntType.value;
-			}
-			else if(t instanceof BoolType)
-				return BoolType.value;
-			//TODO: adicionar!
-			//else if(t instanceof RefType)
-				//return 
-	*/
 		} catch (UndeclaredIdentifierException e) {
 			//System.out.println("NULL");
 		}

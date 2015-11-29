@@ -10,13 +10,14 @@ public class Compiler {
 	    try {
 			CodeBlock code = new CodeBlock();
 			exp = parser.Start();
+			 exp.typeCheck(new Environ<Type>());
 			System.out.println( exp.toString() + " = " + exp.eval(new Environ()) );
 			//criar o contador para usar na compiler frame
 			exp.compile(code, new CompilerFrame());
 			code.dump();
 	    } catch (Exception e) {
 	    	System.out.println ("Syntax Error!");
-	    	//e.printStackTrace();
+	    	e.printStackTrace();
 	    	parser.ReInit(System.in);
 	    }
 	    }

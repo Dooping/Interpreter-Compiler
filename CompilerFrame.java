@@ -11,6 +11,7 @@ public class CompilerFrame {
 	private int type;
 	private CompilerFrame up;
 	private ArrayList<String> ids;
+	private ArrayList<String> types;
 	
 		
 	public CompilerFrame(){
@@ -19,6 +20,7 @@ public class CompilerFrame {
 		this.type = instanceCounter;
 		up = null;
 		ids = new ArrayList<String>();
+		types = new ArrayList<String>();
 	}
 
 	public CompilerFrame (CompilerFrame up){
@@ -27,6 +29,7 @@ public class CompilerFrame {
 		this.type = instanceCounter;
 		this.up = up;
 		ids = new ArrayList<String>();
+		types = new ArrayList<String>();
 	}
 
 	public boolean hasAncestor (){
@@ -39,11 +42,6 @@ public class CompilerFrame {
 			if(num.equals(id)) return true;
 		}
 		return false;
-		/*
-			for(Assoc assoc: values)
-				if(assoc.id.equals(id))
-					return true;
-		return false;*/
 	}
 	
 	public int getType(){
@@ -64,28 +62,16 @@ public class CompilerFrame {
 		}
 	}
 	
-	/*
-	int find(String id) throws UndeclaredIdentifierException{
-		CompilerFrame current = this;
-		ArrayList<Assoc> teste = this.values;
-		while (current != null ){
-			for(Assoc assoc: teste)
-				if(assoc.id.equals(id))
-					return assoc.value;
-			current = current.up;
-			teste = current.getAssoc();
-		}throw new UndeclaredIdentifierException(id);
+	void assocType(String t){
+		types.add(t);
 	}
-	*/
+	
+	public ArrayList<String> getTypes(){
+		return types;
+	}
+		
 	public ArrayList<String> getAssoc (){
 		return ids;
 	}
 	
-	/*
-	void assoc(String id, int value) throws DuplicateIdentifierException{
-		for (Assoc assoc: values)
-			if(assoc.id.equals(id))
-				throw new DuplicateIdentifierException(id);
-		values.add(new Assoc(id,value));
-}*/
 }

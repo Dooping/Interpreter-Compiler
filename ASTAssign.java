@@ -24,12 +24,13 @@ public class ASTAssign implements ASTNode{
 	public Type typeCheck(Environ<Type> env) throws TypeErrorException {
 		Type l =  left.typeCheck(env);
 		Type r = right.typeCheck(env);
-		if(l instanceof RefValue){
+		if(l instanceof RefType){
 			RefType t = (RefType) l;
 			Type teste = t.getType();
 			if(teste.equals(r)){
 				return r;
 			}
+			else throw new TypeErrorException("Diferent types");
 		}
 
 		return null;
@@ -42,9 +43,14 @@ public class ASTAssign implements ASTNode{
 	
 	public void compile(CodeBlock code, CompilerFrame env) throws UndeclaredIdentifierException, DuplicateIdentifierException {
 		left.compile(code, env);
-		code.emit_CheckCastRefInt();
+		code.emit_CheckCastRefClass();
+		//dup
+		code.emit_dup();
 		right.compile(code, env);
-		code.emit_putFieldRefInt();
+		code.emit_putFieldRefClass();
+		code.emit_CheckCastRefClass();
+		code.emit_getFieldForRefClass();
+		//fazer um checkcast e depois um getfield
 		
 	}
 

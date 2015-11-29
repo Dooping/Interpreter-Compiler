@@ -7,6 +7,8 @@ public class ASTDecl implements ASTNode{
 	ArrayList <Binding> decls;
 	//expressão a avaliar: x + y, etc
 	ASTNode expr;
+	ArrayList<Type> TypesOfVar;
+	
 	public ASTDecl(ArrayList <Binding> ds, ASTNode e){
 		decls = ds;
 		expr = e;
@@ -29,6 +31,7 @@ public class ASTDecl implements ASTNode{
 	public Type typeCheck(Environ<Type> env) throws TypeErrorException{
 		Type value;
 		Environ<Type> newEnv = env.beginScope();
+		TypesOfVar = new ArrayList<Type>();
 		for(Binding decl: decls){
 			Type idType = decl.getExpr().typeCheck(newEnv);
 			try {
@@ -36,6 +39,7 @@ public class ASTDecl implements ASTNode{
 			} catch (DuplicateIdentifierException e) {
 				//e.printStackTrace();
 			}
+			TypesOfVar.add(idType);
 		}
 	
 		value = expr.typeCheck(newEnv);
@@ -51,9 +55,14 @@ public class ASTDecl implements ASTNode{
 		int i = 1;
 		for(Binding decl: decls){
 			decl.getExpr().compile(code,env);
-			//TODO:mudar do "I" para o type
-			code.emit_putField(scope.getType(), decl.getID(), "I");
+			Type t = TypesOfVar.get(i-1);
+			String type = "I";
+			if(t instanceof RefType)
+				type = "Lref_class";
+			
+			code.emit_putField(scope.getType(), decl.getID(), type);
 			scope.assoc(decl.getID());
+			scope.assocType(type);
 			if(i < decls.size()){
 				code.emit_dup();
 			}
