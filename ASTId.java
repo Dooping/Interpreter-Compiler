@@ -1,6 +1,7 @@
 public class ASTId implements ASTNode{
 	
 	String id;
+	Type type;
 
 	public ASTId (String id){
 		this.id = id;
@@ -13,14 +14,13 @@ public class ASTId implements ASTNode{
 	
 	public Type typeCheck(Environ<Type> env) throws TypeErrorException{
 		//System.out.println(id);
-		Type t = null;
 		try {
-			t = env.findType(id);
+			type = env.findType(id);
 		} catch (UndeclaredIdentifierException e) {
 			//System.out.println("NULL");
 		}
 		
-		return t;
+		return type;
 	}
 	
 
@@ -38,8 +38,15 @@ public class ASTId implements ASTNode{
 		
 		if(!frame.containsId(this.id))
 			throw new UndeclaredIdentifierException(id);
-		else
-			code.emit_getfield(frame.getType(), this.id, "I");
+		else{
+			String t ="I";
+			
+			if(type instanceof RefType)
+				t = "Lref_int";
+			
+			code.emit_getfield(frame.getType(), this.id, t);
+		}
+			
 	}
 	
 	public String toString(){

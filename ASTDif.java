@@ -32,6 +32,7 @@ public class ASTDif implements ASTNode{
  	}
 
 	public void compile(CodeBlock code, CompilerFrame env)throws UndeclaredIdentifierException, DuplicateIdentifierException  {
+		//TODO:FAZER!
 	}
 
 }
