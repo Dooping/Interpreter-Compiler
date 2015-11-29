@@ -137,7 +137,7 @@ public class CodeBlock {
 	}
 
 	void emit_putFieldRefClass(){
-		code.add("putfield ref_class/v Ljava/lang/Object");
+		code.add("putfield ref_class/v Ljava/lang/Object;");
 	}
 
 	void emit_CheckCastRefClass(){
@@ -145,7 +145,7 @@ public class CodeBlock {
 	}
 
 	void emit_getFieldForRefClass(){
-		code.add("getfield ref_class/v Ljava/lang/Object");
+		code.add("getfield ref_class/v Ljava/lang/Object;");
 	}
 	
 	void emit_aload(){
@@ -288,7 +288,7 @@ public class CodeBlock {
 			PrintWriter out = new PrintWriter("ref_class.j");
 			out.println(".class ref_class");
 			out.println(".super java/lang/Object");
-			out.println(".field public v Ljava/lang/Object");
+			out.println(".field public v Ljava/lang/Object;");
 			out.println();
 			out.println(".method public <init>()V");
 			out.println("aload_0");
