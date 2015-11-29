@@ -33,7 +33,7 @@ public class Parser implements ParserConstants {
   static final public ASTNode Texp() throws ParseException {
   Token op;
   ASTNode t1, t2;
-    t1 = Exp();
+    t1 = REF();
     label_1:
     while (true) {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
@@ -45,10 +45,28 @@ public class Parser implements ParserConstants {
         break label_1;
       }
       op = jj_consume_token(TWOEXPR);
-      t2 = Exp();
+      t2 = REF();
                  t1 = new ASTTwoExpr(t1,t2);
     }
        {if (true) return t1;}
+    throw new Error("Missing return statement in function");
+  }
+
+  static final public ASTNode REF() throws ParseException {
+ Token n;
+  ASTNode q1, q2;
+    q1 = Exp();
+    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+    case RefAssoc:
+      jj_consume_token(RefAssoc);
+      q2 = Exp();
+                    q1 = new ASTAssign(q1,q2);
+      break;
+    default:
+      jj_la1[1] = jj_gen;
+      ;
+    }
+       {if (true) return q1;}
     throw new Error("Missing return statement in function");
   }
 
@@ -64,7 +82,7 @@ public class Parser implements ParserConstants {
         ;
         break;
       default:
-        jj_la1[1] = jj_gen;
+        jj_la1[2] = jj_gen;
         break label_2;
       }
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
@@ -75,7 +93,7 @@ public class Parser implements ParserConstants {
         op = jj_consume_token(MINUS);
         break;
       default:
-        jj_la1[2] = jj_gen;
+        jj_la1[3] = jj_gen;
         jj_consume_token(-1);
         throw new ParseException();
       }
@@ -100,7 +118,7 @@ public class Parser implements ParserConstants {
         ;
         break;
       default:
-        jj_la1[3] = jj_gen;
+        jj_la1[4] = jj_gen;
         break label_3;
       }
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
@@ -111,7 +129,7 @@ public class Parser implements ParserConstants {
         op = jj_consume_token(DIV);
         break;
       default:
-        jj_la1[4] = jj_gen;
+        jj_la1[5] = jj_gen;
         jj_consume_token(-1);
         throw new ParseException();
       }
@@ -138,7 +156,7 @@ public class Parser implements ParserConstants {
         ;
         break;
       default:
-        jj_la1[5] = jj_gen;
+        jj_la1[6] = jj_gen;
         break label_4;
       }
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
@@ -155,7 +173,7 @@ public class Parser implements ParserConstants {
         op = jj_consume_token(DIF);
         break;
       default:
-        jj_la1[6] = jj_gen;
+        jj_la1[7] = jj_gen;
         jj_consume_token(-1);
         throw new ParseException();
       }
@@ -184,7 +202,7 @@ public class Parser implements ParserConstants {
   static final public ASTNode Bexp() throws ParseException {
  Token op;
   ASTNode q1, q2;
-    q1 = REF();
+    q1 = Fact();
     label_5:
     while (true) {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
@@ -193,7 +211,7 @@ public class Parser implements ParserConstants {
         ;
         break;
       default:
-        jj_la1[7] = jj_gen;
+        jj_la1[8] = jj_gen;
         break label_5;
       }
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
@@ -204,36 +222,14 @@ public class Parser implements ParserConstants {
         op = jj_consume_token(OR);
         break;
       default:
-        jj_la1[8] = jj_gen;
+        jj_la1[9] = jj_gen;
         jj_consume_token(-1);
         throw new ParseException();
       }
-      q2 = REF();
+      q2 = Fact();
                            if (op.kind == AND)
                          q1 = new ASTAnd(q1,q2);
                    else  q1 = new ASTOr(q1,q2);
-    }
-       {if (true) return q1;}
-    throw new Error("Missing return statement in function");
-  }
-
-  static final public ASTNode REF() throws ParseException {
- Token op;
-  ASTNode q1, q2;
-    q1 = Fact();
-    label_6:
-    while (true) {
-      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-      case RefAssoc:
-        ;
-        break;
-      default:
-        jj_la1[9] = jj_gen;
-        break label_6;
-      }
-      op = jj_consume_token(RefAssoc);
-      q2 = Fact();
-                    q1 = new ASTAssign(q1,q2);
     }
        {if (true) return q1;}
     throw new Error("Missing return statement in function");
@@ -313,7 +309,7 @@ public class Parser implements ParserConstants {
   Token x;
   ArrayList <Binding> bindings = new ArrayList<Binding>();
     jj_consume_token(DECL);
-    label_7:
+    label_6:
     while (true) {
       x = jj_consume_token(Id);
       jj_consume_token(ASSOC);
@@ -325,7 +321,7 @@ public class Parser implements ParserConstants {
         break;
       default:
         jj_la1[11] = jj_gen;
-        break label_7;
+        break label_6;
       }
     }
     jj_consume_token(IN);
@@ -353,7 +349,7 @@ public class Parser implements ParserConstants {
       jj_la1_init_1();
    }
    private static void jj_la1_init_0() {
-      jj_la1_0 = new int[] {0x8000,0xc0000,0xc0000,0x300000,0x300000,0xf000000,0xf000000,0x30000000,0x30000000,0x4000,0x805b0890,0x0,};
+      jj_la1_0 = new int[] {0x8000,0x4000,0xc0000,0xc0000,0x300000,0x300000,0xf000000,0xf000000,0x30000000,0x30000000,0x805b0890,0x0,};
    }
    private static void jj_la1_init_1() {
       jj_la1_1 = new int[] {0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x1,0x1,};
