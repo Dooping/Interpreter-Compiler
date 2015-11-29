@@ -16,7 +16,7 @@ public class ASTEquals implements ASTNode{
 		Type t1 = left.typeCheck(env);
 		Type t2 = right.typeCheck(env);
 		if ((t1==IntType.value && t2==IntType.value) || (t1==BoolType.value && t2==BoolType.value))
-			return IntType.value;
+			return BoolType.value;
 		else
 			throw new TypeErrorException(null);
 	}
@@ -32,7 +32,7 @@ public class ASTEquals implements ASTNode{
  	}
 
 	public void compile(CodeBlock code, CompilerFrame env)throws UndeclaredIdentifierException, DuplicateIdentifierException  {
-	//TODO: fazer compile
+		code.comment("fazer == ");
 		left.compile(code, env);
 		right.compile(code, env);
 		code.emit_equals();

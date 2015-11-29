@@ -32,6 +32,7 @@ public class ASTSmaller implements ASTNode{
  	}
 
 	public void compile(CodeBlock code, CompilerFrame env)throws UndeclaredIdentifierException, DuplicateIdentifierException  {
+		code.comment("fazer <");
 		right.compile(code, env);
 		left.compile(code, env);
 		//NOTA: o codeBlock tem codigo para x>y, para tal, reutiliza-se este codigo,

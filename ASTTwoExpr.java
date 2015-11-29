@@ -21,6 +21,8 @@ public class ASTTwoExpr implements ASTNode{
 
 	public void compile(CodeBlock code, CompilerFrame env)throws UndeclaredIdentifierException, DuplicateIdentifierException {
 		left.compile(code, env);
+		code.comment("para ignorar a expressão anterior");
+		code.emit_pop();
 		right.compile(code, env);
 	}
 	

@@ -42,6 +42,7 @@ public class ASTAssign implements ASTNode{
 	    }
 	
 	public void compile(CodeBlock code, CompilerFrame env) throws UndeclaredIdentifierException, DuplicateIdentifierException {
+		code.comment("assign");
 		if(rightType instanceof RefType){
 			left.compile(code, env);
 			code.emit_CheckCastRefClass();

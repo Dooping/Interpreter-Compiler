@@ -23,24 +23,17 @@ public class ASTWhile implements ASTNode{
 	}
 
 	public Type typeCheck(Environ<Type> env) throws TypeErrorException {
-		
-		//System.out.println(clause.toString() + " " + body.toString());
 		Type t1 = clause.typeCheck(env);
-
 		Type t2 = body.typeCheck(env);
-		//System.out.println(t1.toString());
-		//System.out.println(t2.toString());
-		
-		//if( t1 == BoolType.value && t2 == IntType.value ) 
 		if( t1 == BoolType.value ) 
 			return BoolType.value;
-
 		else 
 			throw new TypeErrorException("Using a non-boolean where a boolean was expected.");
 
 	}
 
 	public void compile(CodeBlock code, CompilerFrame env)throws UndeclaredIdentifierException, DuplicateIdentifierException {
+		code.comment("fazer o while");
 		int label = code.labelGenarator();
 		code.emit_label(label);
 		clause.compile(code, env);
@@ -52,7 +45,6 @@ public class ASTWhile implements ASTNode{
 	}
 	
 	public String toString(){
-		//o string leva o que?
 		return body.toString();
 	}
 

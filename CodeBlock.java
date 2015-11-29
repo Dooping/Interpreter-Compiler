@@ -39,6 +39,18 @@ public class CodeBlock {
 		code.add("L_" + label2+":");
 	}
 	
+	void emit_dif(){
+		code.add("isub");
+		int label = this.labelGenarator();
+		code.add("ifeq L_" + label);
+		emit_push(1);
+		int label2 = this.labelGenarator();
+		code.add("goto L_" + label2);
+		code.add("L_" + label + ":");
+		emit_push(0);
+		code.add("L_" + label2+":");
+	}
+	
 	void emit_compare(){
 		code.add("isub");
 		int label = this.labelGenarator();
@@ -49,6 +61,10 @@ public class CodeBlock {
 		code.add("L_" + label + ":");
 		emit_push(1);
 		code.add("L_" + label2+":");
+	}
+	
+	void emit_pop(){
+		code.add("pop");
 	}
 	
 	void emit_and(){

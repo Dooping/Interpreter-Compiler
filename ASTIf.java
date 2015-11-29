@@ -39,6 +39,7 @@ public class ASTIf implements ASTNode{
 	}
 
 	public void compile(CodeBlock code, CompilerFrame env)throws UndeclaredIdentifierException, DuplicateIdentifierException {
+		code.comment("fazer o if");
 		//Vamos precisar de dois labels
 		int label = code.labelGenarator();
 		int label2 = code.labelGenarator();

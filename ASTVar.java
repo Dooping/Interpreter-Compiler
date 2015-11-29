@@ -22,6 +22,7 @@ public class ASTVar implements ASTNode{
 
 	
 	public void compile(CodeBlock code, CompilerFrame env) throws UndeclaredIdentifierException, DuplicateIdentifierException {
+		code.comment("fazer um apontador ");
 		if(expType instanceof RefType){
 			code.emit_refClass();
 			expr.compile(code, env);

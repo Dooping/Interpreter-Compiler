@@ -49,7 +49,7 @@ public class ASTDecl implements ASTNode{
 
 	@SuppressWarnings("static-access")
 	public void compile(CodeBlock code, CompilerFrame env)throws UndeclaredIdentifierException, DuplicateIdentifierException {
-
+		code.comment("decl");
 		CompilerFrame scope = env.beginScope();
 		code.newFrame(scope.getType(), scope);
 		int i = 1;
