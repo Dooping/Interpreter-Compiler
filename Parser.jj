@@ -103,10 +103,22 @@ ASTNode Texp():
 { Token op;
   ASTNode t1, t2; }
 {
-     t1=Exp() (  op=<TWOEXPR>  t2=Exp() 
+     t1=REF() (  op=<TWOEXPR>  t2=REF() 
                { t1 = new ASTTwoExpr(t1,t2); }
                ) *
      { return t1; } 
+}
+
+ASTNode REF() :
+{Token n;
+  ASTNode q1, q2;}
+{
+     q1 = Exp() ( ( <RefAssoc>  ) q2=Exp()
+    			 { 
+                    q1 = new ASTAssign(q1,q2);
+                 }
+                  )?
+     { return q1; } 
 }
 
 ASTNode Exp():
@@ -162,22 +174,10 @@ ASTNode Bexp() :
 {Token op;
   ASTNode q1, q2;}
 {
-     q1 = REF() ( ( op=<AND> | op=<OR> ) q2=REF()
+     q1 = Fact() ( ( op=<AND> | op=<OR> ) q2=Fact()
     			 { if (op.kind == AND) 
                          q1 = new ASTAnd(q1,q2);
                    else  q1 = new ASTOr(q1,q2);
-                 }
-                  )*
-     { return q1; } 
-}
-
-ASTNode REF() :
-{Token op;
-  ASTNode q1, q2;}
-{
-     q1 = Fact() ( ( op=<RefAssoc>  ) q2=Fact()
-    			 { 
-                    q1 = new ASTAssign(q1,q2);
                  }
                   )*
      { return q1; } 
