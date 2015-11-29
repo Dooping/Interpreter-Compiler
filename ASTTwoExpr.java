@@ -25,7 +25,7 @@ public class ASTTwoExpr implements ASTNode{
 	}
 	
 	public String toString(){
-		return left.toString()+" AND "  + right.toString() + " ";
+		return left.toString()+" ; "  + right.toString() + " ";
 	}
 
 }

@@ -23,9 +23,8 @@ public class CodeBlock {
 		code.add("ifeq L" + label);
 	}
 	
-	void emit_goto(int label1, int label2){
+	void emit_goto(int label1){
 		code.add("goto L" + label1);
-		code.add("L" + label2);
 	}
 	
 	void emit_compare(){
