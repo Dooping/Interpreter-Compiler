@@ -57,8 +57,14 @@ public class ASTDecl implements ASTNode{
 			decl.getExpr().compile(code,env);
 			Type t = TypesOfVar.get(i-1);
 			String type = "I";
-			if(t instanceof RefType)
-				type = "Lref_int";
+			if(t instanceof RefType){
+				RefType tt = (RefType) t;
+				if(tt.type instanceof RefType)
+					type = "Lref_class";
+				else
+					type = "Lref_int";
+			}
+				
 			
 			code.emit_putField(scope.getType(), decl.getID(), type);
 			scope.assoc(decl.getID());

@@ -26,12 +26,17 @@ public class ASTDesref  implements ASTNode{
 
 	
 	public void compile(CodeBlock code, CompilerFrame env)throws UndeclaredIdentifierException, DuplicateIdentifierException {
-		//fazer o expr.compile
-		//ver o tipo para o check cast
-		//getfield
-		expr.compile(code, env);
-		code.emit_CheckCastRefClass();
-		code.emit_getFieldForRefClass();
+		if(type instanceof RefType){
+			expr.compile(code, env);
+			code.emit_CheckCastRefClass();
+			code.emit_getFieldForRefClass();
+		}
+		else {
+			expr.compile(code, env);
+			code.emit_CheckCastRefInt();
+			code.emit_getFieldForRefInt();
+		}
+
 	}
 	
 	 public String toString(){

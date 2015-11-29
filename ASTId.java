@@ -13,13 +13,10 @@ public class ASTId implements ASTNode{
 	}
 	
 	public Type typeCheck(Environ<Type> env) throws TypeErrorException{
-		//System.out.println(id);
 		try {
 			type = env.findType(id);
 		} catch (UndeclaredIdentifierException e) {
-			//System.out.println("NULL");
 		}
-		
 		return type;
 	}
 	
@@ -41,9 +38,14 @@ public class ASTId implements ASTNode{
 		else{
 			String t ="I";
 			
-			if(type instanceof RefType)
-				t = "Lref_int";
-			
+			if(type instanceof RefType){
+				RefType tt = (RefType) type;
+				if(tt.type instanceof RefType)
+					t = "Lref_class";
+				else
+					t = "Lref_int";
+			}
+
 			code.emit_getfield(frame.getType(), this.id, t);
 		}
 			

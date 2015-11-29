@@ -111,23 +111,42 @@ public class CodeBlock {
 	}
 
 	
-		void emit_refClass(){
+		void emit_refInt(){
 		code.add("new ref_int");
 		code.add("dup");
 		code.add("invokespecial ref_int/<init>()V");
 		code.add("dup");	
 	}
 	
-	void emit_putFieldRefClass(){
+	void emit_putFieldRefInt(){
 		code.add("putfield ref_int/v I");
 	}
 	
-	void emit_CheckCastRefClass(){
+	void emit_CheckCastRefInt(){
 		code.add("checkcast ref_int");
 	}
 	
-	void emit_getFieldForRefClass(){
+	void emit_getFieldForRefInt(){
 		code.add("getfield ref_int/v I");
+	}
+	
+	void emit_refClass(){
+		code.add("new ref_class");
+		code.add("dup");
+		code.add("invokespecial ref_class/<init>()V");
+		code.add("dup");	
+	}
+
+	void emit_putFieldRefClass(){
+		code.add("putfield ref_class/v Ljava/lang/Object");
+	}
+
+	void emit_CheckCastRefClass(){
+		code.add("checkcast ref_class");
+	}
+
+	void emit_getFieldForRefClass(){
+		code.add("getfield ref_class/v Ljava/lang/Object");
 	}
 	
 	void emit_aload(){
@@ -146,7 +165,7 @@ public class CodeBlock {
 		createDemo();
 		createFrames();
 		createInterface();
-		creatRefClass();
+		creatRef();
 	}
 
 	//Criar ficheiros
@@ -241,12 +260,36 @@ public class CodeBlock {
 		}
 	}
 	
-	void creatRefClass(){
+	
+	void creatRef(){
+		creatRefInt();
+		creatRefClass();
+	}
+	
+	void creatRefInt(){
 		try{
 			PrintWriter out = new PrintWriter("ref_int.j");
 			out.println(".class ref_int");
 			out.println(".super java/lang/Object");
 			out.println(".field public v I");
+			out.println();
+			out.println(".method public <init>()V");
+			out.println("aload_0");
+			out.println("invokespecial java/lang/Object/<init>()V");
+			out.println("return");
+			out.println(".end method");
+			out.close();
+		} catch (Exception e){
+			//e.printStackTrace();
+		}
+	}
+	
+	void creatRefClass(){
+		try{
+			PrintWriter out = new PrintWriter("ref_class.j");
+			out.println(".class ref_class");
+			out.println(".super java/lang/Object");
+			out.println(".field public v Ljava/lang/Object");
 			out.println();
 			out.println(".method public <init>()V");
 			out.println("aload_0");

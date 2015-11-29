@@ -2,6 +2,7 @@
 public class ASTVar implements ASTNode{
 	ASTNode expr;
 	Type type;
+	Type expType;
 
 	public ASTVar(ASTNode expr) {
 		this.expr = expr;
@@ -14,15 +15,25 @@ public class ASTVar implements ASTNode{
 	}
 
 	
-	public Type typeCheck(Environ<Type> env) throws TypeErrorException {	
-		return type = new RefType(expr.typeCheck(env));
+	public Type typeCheck(Environ<Type> env) throws TypeErrorException {
+		expType = expr.typeCheck(env);
+		return type = new RefType(expType);
 	}
 
 	
 	public void compile(CodeBlock code, CompilerFrame env) throws UndeclaredIdentifierException, DuplicateIdentifierException {
-		code.emit_refClass();
-		expr.compile(code, env);
-		code.emit_putFieldRefClass();
+		if(expType instanceof RefType){
+			code.emit_refClass();
+			expr.compile(code, env);
+			code.emit_putFieldRefClass();
+		}
+		else{
+			code.emit_refInt();
+			expr.compile(code, env);
+			code.emit_putFieldRefInt();
+		}
+		
+
 		
 	}
 	
