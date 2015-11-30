@@ -1,6 +1,8 @@
+package Values;
+
 
 public class BooleanValue implements IValue {
-	boolean val;
+	public boolean val;
 	
 	public BooleanValue(boolean val) {
 		this.val = val;

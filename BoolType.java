@@ -1,3 +1,5 @@
+package Types;
+
 
 public class BoolType implements Type{
 	

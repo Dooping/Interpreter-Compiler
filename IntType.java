@@ -1,3 +1,4 @@
+package Types;
 
 public class IntType implements Type{
 	

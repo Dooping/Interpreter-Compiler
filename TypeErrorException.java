@@ -1,3 +1,4 @@
+package exceptions;
 
 public class TypeErrorException extends Exception {
 	
@@ -10,6 +11,10 @@ public class TypeErrorException extends Exception {
 	
 	public TypeErrorException(String id){
 		this.id = id;
+	}
+	
+	public String getId() {
+		return this.id;
 	}
 
 }

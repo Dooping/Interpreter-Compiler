@@ -1,5 +1,10 @@
+package AST;
 
-
+import parser.*;
+import Types.*;
+import exceptions.*;
+import Values.*;
+import main.*;
 
 public class ASTWhile implements ASTNode{
 	
@@ -43,6 +48,8 @@ public class ASTWhile implements ASTNode{
 		code.emit_pop();
 		code.emit_goto(label);
 		code.emit_label(label2);
+		//para não deixar a pilha vazia
+		code.emit_push(0);
 	}
 	
 	public String toString(){

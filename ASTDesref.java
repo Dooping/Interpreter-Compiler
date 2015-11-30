@@ -1,3 +1,16 @@
+package AST;
+
+import parser.*;
+import Types.*;
+import exceptions.*;
+import Values.*;
+import main.*;
+import parser.*;
+import Types.*;
+import exceptions.*;
+import Values.*;
+import main.*;
+
 
 public class ASTDesref  implements ASTNode{
 	ASTNode expr;

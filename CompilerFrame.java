@@ -1,13 +1,15 @@
+package main;
+
+
+
 import java.util.*;
-
-
 
 public class CompilerFrame {
 	static int lastId = -1;
 	
 	//counter
 	int instanceCounter = 0;
-    static int counter = 0;
+    public static int counter = 0;
 	private int type;
 	private CompilerFrame up;
 	private ArrayList<String> ids;
@@ -56,13 +58,13 @@ public class CompilerFrame {
 		return new CompilerFrame(this);
 	}
 	
-	void assoc(String id){
+	public void assoc(String id){
 		if(!containsId(id)){
 			ids.add(id);
 		}
 	}
 	
-	void assocType(String t){
+	public void assocType(String t){
 		types.add(t);
 	}
 	

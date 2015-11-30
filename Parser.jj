@@ -1,5 +1,15 @@
+
 PARSER_BEGIN(Parser)
+
+package parser;
+
 import java.util.*;
+import java.util.ArrayList;
+import AST.*;
+import exceptions.*;
+import main.*;
+import Types.*;
+import Values.*;
 
 /** ID lister. */
 public class Parser {
@@ -138,7 +148,7 @@ ASTNode Term() :
 {Token op;
   ASTNode f1, f2;}
 {
-     f1 = Cmp() ( ( op=<TIMES> | op=<DIV> ) f2=Cmp()
+     f1 = Bexp() ( ( op=<TIMES> | op=<DIV> ) f2=Bexp()
     			 { if (op.kind == TIMES) 
                          f1 = new ASTMul(f1,f2);
                    else  f1 = new ASTDiv(f1,f2);
@@ -147,11 +157,24 @@ ASTNode Term() :
      { return f1; } 
 }
 
+ASTNode Bexp() :
+{Token op;
+  ASTNode q1, q2;}
+{
+     q1 = Cmp() ( ( op=<AND> | op=<OR> ) q2=Cmp()
+    			 { if (op.kind == AND) 
+                         q1 = new ASTAnd(q1,q2);
+                   else  q1 = new ASTOr(q1,q2);
+                 }
+                  )*
+     { return q1; } 
+}
+
 ASTNode Cmp():
 {Token op;
   ASTNode d1, d2;}
 {
-     d1 = Bexp() ( ( op=<BIGGER> | op=<SMALLER> | op=<EQUALS> | op=<DIF>) d2=Bexp()
+     d1 = Fact() ( ( op=<BIGGER> | op=<SMALLER> | op=<EQUALS> | op=<DIF>) d2=Fact()
     			 { if (op.kind == BIGGER)    			 {
     			    d1 = new ASTBigger(d1,d2);
     			  }	
@@ -170,18 +193,7 @@ ASTNode Cmp():
      { return d1; } 
 }
 
-ASTNode Bexp() :
-{Token op;
-  ASTNode q1, q2;}
-{
-     q1 = Fact() ( ( op=<AND> | op=<OR> ) q2=Fact()
-    			 { if (op.kind == AND) 
-                         q1 = new ASTAnd(q1,q2);
-                   else  q1 = new ASTOr(q1,q2);
-                 }
-                  )*
-     { return q1; } 
-}
+
 
 
 ASTNode Fact() :

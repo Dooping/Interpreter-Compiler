@@ -4,6 +4,12 @@
  * An implementation of interface CharStream, where the stream is assumed to
  * contain only ASCII characters (without unicode processing).
  */
+package parser;
+
+import AST.*;
+import main.*;
+import Types.*;
+import Values.*;
 
 public class SimpleCharStream
 {

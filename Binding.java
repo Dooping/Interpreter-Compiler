@@ -1,3 +1,7 @@
+package main;
+
+
+import AST.*;
 
 public class Binding {
 	

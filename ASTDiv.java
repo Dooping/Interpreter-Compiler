@@ -1,3 +1,10 @@
+package AST;
+
+import parser.*;
+import Types.*;
+import exceptions.*;
+import Values.*;
+import main.*;
 public class ASTDiv implements ASTNode{
 	
 	ASTNode left, right;

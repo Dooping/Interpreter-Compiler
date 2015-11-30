@@ -1,3 +1,5 @@
+package Values;
+
 public class IntegerValue implements IValue {
 	int val;
 	

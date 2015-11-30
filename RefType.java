@@ -1,6 +1,7 @@
+package Types;
 
 public class RefType implements Type{
-	final Type type;
+	public final Type type;
 
 	public RefType(Type type) {
 		this.type = type;

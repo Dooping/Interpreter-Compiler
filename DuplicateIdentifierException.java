@@ -1,3 +1,5 @@
+package exceptions;
+
 
 public class DuplicateIdentifierException extends Exception {
 	
@@ -10,6 +12,10 @@ public class DuplicateIdentifierException extends Exception {
 	
 	public DuplicateIdentifierException(String id){
 		this.id = id;
+	}
+	
+	public String getId() {
+		return this.id;
 	}
 
 }

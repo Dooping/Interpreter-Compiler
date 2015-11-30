@@ -1,3 +1,10 @@
+package AST;
+
+import parser.*;
+import Types.*;
+import exceptions.*;
+import Values.*;
+import main.*;
 
 public class ASTVar implements ASTNode{
 	ASTNode expr;

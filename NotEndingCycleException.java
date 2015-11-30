@@ -1,3 +1,4 @@
+package exceptions;
 
 public class NotEndingCycleException extends Exception {
 	
@@ -14,6 +15,10 @@ public class NotEndingCycleException extends Exception {
 	
 	public String toString(){
 		return "infinte cycle";
+	}
+	
+	public String getId() {
+		return this.id;
 	}
 
 }

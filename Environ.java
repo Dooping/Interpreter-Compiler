@@ -1,3 +1,11 @@
+package main;
+
+
+import Types.*;
+import exceptions.*;
+import Values.*;
+
+
 import java.util.*;;
 
 
@@ -32,7 +40,7 @@ public class Environ<T> {
 		assocs = new ArrayList<Assoc>();
 	}
 	
-	IValue find(String id) throws UndeclaredIdentifierException{
+	public IValue find(String id) throws UndeclaredIdentifierException{
 		Environ<T> current = this;
 		ArrayList<Assoc> teste = this.assocs;
 
@@ -46,7 +54,7 @@ public class Environ<T> {
 		}throw new UndeclaredIdentifierException(id);
 	}
 	
-	Type findType(String id) throws UndeclaredIdentifierException{
+	public Type findType(String id) throws UndeclaredIdentifierException{
 		Environ<T> current = this;
 		ArrayList<Assoc> teste = this.assocs;
 
@@ -64,22 +72,22 @@ public class Environ<T> {
 		return assocs;
 	}
 	
-	Environ<T> beginScope(){
+	public Environ<T> beginScope(){
 		return new Environ<T>(this);
 	}
 	
-	Environ<T> endScope(){
+	public Environ<T> endScope(){
 		return up;
 	}
 	
-	void assocType(String id, Type type) throws DuplicateIdentifierException{
+	public void assocType(String id, Type type) throws DuplicateIdentifierException{
 			for (Assoc assoc: assocs)
 				if(assoc.id.equals(id))
 					throw new DuplicateIdentifierException(id);
 			assocs.add(new Assoc(id,type));
 	}
 	
-	void assoc(String id, IValue value) throws DuplicateIdentifierException{
+	public void assoc(String id, IValue value) throws DuplicateIdentifierException{
 		for (Assoc assoc: assocs)
 			if(assoc.id.equals(id))
 				throw new DuplicateIdentifierException(id);

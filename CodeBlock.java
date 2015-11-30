@@ -1,3 +1,6 @@
+package main;
+
+
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
@@ -11,23 +14,23 @@ public class CodeBlock {
 		frames = new ArrayList<CompilerFrame>();
 		currentLabel = 0;
 	}
-	int labelGenarator(){
+	public int labelGenarator(){
 		return currentLabel++;
 	}
 
-	void emit_label (int label){
+	public void emit_label (int label){
 		code.add("L" + label + ":");
 	}
 	
-	void emit_ifeq(int label){
+	public void emit_ifeq(int label){
 		code.add("ifeq L" + label);
 	}
 	
-	void emit_goto(int label1){
+	public void emit_goto(int label1){
 		code.add("goto L" + label1);
 	}
 	
-	void emit_equals(){
+	public void emit_equals(){
 		code.add("isub");
 		int label = this.labelGenarator();
 		code.add("ifeq L_" + label);
@@ -39,7 +42,7 @@ public class CodeBlock {
 		code.add("L_" + label2+":");
 	}
 	
-	void emit_dif(){
+	public void emit_dif(){
 		code.add("isub");
 		int label = this.labelGenarator();
 		code.add("ifeq L_" + label);
@@ -51,7 +54,7 @@ public class CodeBlock {
 		code.add("L_" + label2+":");
 	}
 	
-	void emit_compare(){
+	public void emit_compare(){
 		code.add("isub");
 		int label = this.labelGenarator();
 		code.add("ifgt L_" + label);
@@ -63,56 +66,56 @@ public class CodeBlock {
 		code.add("L_" + label2+":");
 	}
 	
-	void emit_pop(){
+	public void emit_pop(){
 		code.add("pop");
 	}
 	
-	void emit_and(){
+	public void emit_and(){
 		code.add("iand");
 	}
 	
-	void emit_or(){
+	public void emit_or(){
 		code.add("ior");
 	}
 	
-	void emit_push(int n){
+	public void emit_push(int n){
 		code.add("sipush "+n);
 	}
 	
-	void emit_add(){
+	public void emit_add(){
 		code.add("iadd");
 	}
 	
-	void emit_mul(){
+	public void emit_mul(){
 		code.add("imul");
 	}
 	
-	void emit_sub(){
+	public void emit_sub(){
 		code.add("isub");
 	}
 	
-	void emit_div(){
+	public void emit_div(){
 		code.add("idiv");
 	}
 	
-	void comment (String comment){
+	public void comment (String comment){
 		code.add(";" + comment);
 	}
 	
-	void loadFrame(CompilerFrame env){
+	public void loadFrame(CompilerFrame env){
 		emit_aload();
 		code.add("checkcast frame_" + env.getType());
 	}
 	
-	void getFrame(int frame, int father) {
+	public void getFrame(int frame, int father) {
 		code.add("getfield frame_" + frame + "/SL Lframe_" + father + ";");
 	}
 	
-	void emit_getfield(int frame, String id, String type){
+	public void emit_getfield(int frame, String id, String type){
 		code.add("getfield frame_" + frame + "/loc_" + id + " " + type);
 	}
 	
-	void newFrame(int type, CompilerFrame env){
+	public void newFrame(int type, CompilerFrame env){
 		comment("create a new frame");
 		code.add("new frame_" + type);
 		code.add("dup");
@@ -126,65 +129,69 @@ public class CodeBlock {
 		frames.add(env);
 	}
 	
-	void endFrame(int frame, int father){
+	public void endFrame(int frame, int father){
 		if(frame == 1){
 			code.add("aconst_null");
 			emit_astore();
 		}
 	}
 	
-	void emit_putField(int frame, String id, String type){
+	public void emit_putField(int frame, String id, String type){
 		code.add("putfield frame_" + frame + "/loc_" + id + " " + type);
+	}
+	
+	public void emit_checkTypeCheck(String type){
+		code.add("checkcast "+type);
 	}
 
 	
-		void emit_refInt(){
+		public void emit_refInt(){
 		code.add("new ref_int");
 		code.add("dup");
 		code.add("invokespecial ref_int/<init>()V");
 		code.add("dup");	
 	}
 	
-	void emit_putFieldRefInt(){
+	public void emit_putFieldRefInt(){
 		code.add("putfield ref_int/v I");
 	}
 	
-	void emit_CheckCastRefInt(){
+	public void emit_CheckCastRefInt(){
 		code.add("checkcast ref_int");
 	}
 	
-	void emit_getFieldForRefInt(){
+	public void emit_getFieldForRefInt(){
 		code.add("getfield ref_int/v I");
 	}
 	
-	void emit_refClass(){
+	public void emit_refClass(){
 		code.add("new ref_class");
 		code.add("dup");
 		code.add("invokespecial ref_class/<init>()V");
 		code.add("dup");	
 	}
 
-	void emit_putFieldRefClass(){
+	public void emit_putFieldRefClass(){
 		code.add("putfield ref_class/v Ljava/lang/Object;");
 	}
 
-	void emit_CheckCastRefClass(){
+	public void emit_CheckCastRefClass(){
 		code.add("checkcast ref_class");
 	}
 
-	void emit_getFieldForRefClass(){
+	public void emit_getFieldForRefClass(){
 		code.add("getfield ref_class/v Ljava/lang/Object;");
 	}
 	
-	void emit_aload(){
+	public void emit_aload(){
 		code.add("aload 1");
 	}
 	
-	void emit_astore(){
+	public void emit_astore(){
 		code.add("astore 1");
 	}
 	
-	void emit_dup(){
+	public void emit_dup(){
 		code.add("dup");
 	}
 	
@@ -196,7 +203,7 @@ public class CodeBlock {
 	}
 
 	//Criar ficheiros
-	void createDemo(){
+	public void createDemo(){
 		try{
 			PrintWriter out = new PrintWriter("Demo.j");
 			createHeader(out);

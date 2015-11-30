@@ -1,8 +1,16 @@
+package AST;
+
+import parser.*;
+import Types.*;
+import exceptions.*;
+import Values.*;
+import main.*;
 
 public class ASTTwoExpr implements ASTNode{
 	
 	ASTNode left, right;
 	IValue l, r;
+
 	
 	public ASTTwoExpr(ASTNode l, ASTNode r){
 		this.left = l;
@@ -16,12 +24,13 @@ public class ASTTwoExpr implements ASTNode{
 	}
 
 	public Type typeCheck(Environ<Type> env) throws TypeErrorException {
+		left.typeCheck(env);
 		return right.typeCheck(env);
 	}
 
 	public void compile(CodeBlock code, CompilerFrame env)throws UndeclaredIdentifierException, DuplicateIdentifierException {
 		left.compile(code, env);
-		code.comment("para ignorar a expressão anterior");
+		code.comment("para ignorar a expressao anterior");
 		code.emit_pop();
 		right.compile(code, env);
 	}

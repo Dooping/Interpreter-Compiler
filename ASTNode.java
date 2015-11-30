@@ -1,3 +1,11 @@
+package AST;
+
+import parser.*;
+import Types.*;
+import exceptions.*;
+import Values.*;
+import main.*;
+
 public interface ASTNode {
 
 	IValue eval(Environ<IValue> e) throws UndeclaredIdentifierException, DuplicateIdentifierException;

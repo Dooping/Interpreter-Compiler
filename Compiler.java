@@ -1,3 +1,10 @@
+package main;
+
+import parser.*;
+import Types.*;
+import exceptions.*;
+import Values.*;
+import AST.*;
 
 public class Compiler {
 
@@ -11,7 +18,7 @@ public class Compiler {
 			CodeBlock code = new CodeBlock();
 			exp = parser.Start();
 			 exp.typeCheck(new Environ<Type>());
-			System.out.println( exp.toString() + " = " + exp.eval(new Environ()) );
+			//System.out.println( exp.toString() + " = " + exp.eval(new Environ()) );
 			//criar o contador para usar na compiler frame
 			exp.compile(code, new CompilerFrame());
 			code.dump();

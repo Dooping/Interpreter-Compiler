@@ -1,3 +1,4 @@
+package exceptions;
 
 public class UndeclaredIdentifierException extends Exception{
 
@@ -10,5 +11,9 @@ public class UndeclaredIdentifierException extends Exception{
 	
 	public UndeclaredIdentifierException(String id){
 		this.id = id;
+	}
+	
+	public String getId() {
+		return this.id;
 	}
 }
