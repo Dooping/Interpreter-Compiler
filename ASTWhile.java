@@ -40,6 +40,7 @@ public class ASTWhile implements ASTNode{
 		int label2 = code.labelGenarator();
 		code.emit_ifeq(label2);
 		body.compile(code, env);
+		code.emit_pop();
 		code.emit_goto(label);
 		code.emit_label(label2);
 	}

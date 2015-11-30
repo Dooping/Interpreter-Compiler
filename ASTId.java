@@ -41,9 +41,9 @@ public class ASTId implements ASTNode{
 			if(type instanceof RefType){
 				RefType tt = (RefType) type;
 				if(tt.type instanceof RefType)
-					t = "Lref_class";
+					t = "Lref_class;";
 				else
-					t = "Lref_int";
+					t = "Lref_int;";
 			}
 
 			code.emit_getfield(frame.getType(), this.id, t);

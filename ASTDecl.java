@@ -60,9 +60,9 @@ public class ASTDecl implements ASTNode{
 			if(t instanceof RefType){
 				RefType tt = (RefType) t;
 				if(tt.type instanceof RefType)
-					type = "Lref_class";
+					type = "Lref_class;";
 				else
-					type = "Lref_int";
+					type = "Lref_int;";
 			}
 				
 			

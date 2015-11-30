@@ -109,7 +109,7 @@ public class CodeBlock {
 	}
 	
 	void emit_getfield(int frame, String id, String type){
-		code.add("getfield frame_" + frame + "/loc_" + id + " " + type+";");
+		code.add("getfield frame_" + frame + "/loc_" + id + " " + type);
 	}
 	
 	void newFrame(int type, CompilerFrame env){
@@ -134,7 +134,7 @@ public class CodeBlock {
 	}
 	
 	void emit_putField(int frame, String id, String type){
-		code.add("putfield frame_" + frame + "/loc_" + id + " " + type+";");
+		code.add("putfield frame_" + frame + "/loc_" + id + " " + type);
 	}
 
 	
@@ -271,7 +271,7 @@ public class CodeBlock {
 				ArrayList <String> t = frame.getTypes();
 				int i = 0;
 				for(String s: frame.getAssoc()){
-					out.println(".field public loc_" + s + " "+ t.get(i)+";");
+					out.println(".field public loc_" + s + " "+ t.get(i));
 					i++;
 				}
 				out.println();

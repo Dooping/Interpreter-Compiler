@@ -325,7 +325,7 @@ public class Parser implements ParserConstants {
       }
     }
     jj_consume_token(IN);
-    t2 = Exp();
+    t2 = Texp();
     jj_consume_token(END);
    {if (true) return new ASTDecl(bindings,t2);}
     throw new Error("Missing return statement in function");

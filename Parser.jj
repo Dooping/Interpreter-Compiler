@@ -212,7 +212,7 @@ ASTNode Decl():
  <DECL> (x = <Id> <ASSOC> t1 = Texp()
  { bindings.add(new Binding (x.image, t1));}
  )+
-  <IN> t2 = Exp() <END>
+  <IN> t2 = Texp() <END>
  {
    return new ASTDecl(bindings,t2);
  }
