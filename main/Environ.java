@@ -94,22 +94,6 @@ public class Environ<T> {
 		assocs.add(new Assoc(id,value));
 	}
 	
-	IValue defineNewValue(String id, IValue newV) throws UndeclaredIdentifierException{
-		Environ<T> current = this;
-		ArrayList<Assoc> teste = this.assocs;
-
-		while (current != null ){
-			teste = current.getAssoc();
-			for(Assoc assoc: teste)
-				if(assoc.id.equals(id)){
-					assoc.value = newV;
-					return newV;
-				}
-					
-			current = current.up;
-			
-		}throw new UndeclaredIdentifierException(id);
-	}
 }
 
 

@@ -17,7 +17,7 @@ import org.junit.Test;
 
 import main.Compiler;
 import parser.ParseException;
-import main.Interpreter;
+import main.*;
 import exceptions.*;
 import Values.*;
 

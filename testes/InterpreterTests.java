@@ -8,7 +8,7 @@ import Values.*;
 import static org.junit.Assert.*;
 
 import org.junit.Test;
-import main.Interpreter;
+import main.*;
 
 public class InterpreterTests {
 

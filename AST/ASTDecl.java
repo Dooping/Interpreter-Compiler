@@ -23,14 +23,12 @@ public class ASTDecl implements ASTNode{
 
 	public IValue eval(Environ<IValue> env) throws UndeclaredIdentifierException, DuplicateIdentifierException{
 		IValue value;
-		
 		//novo ambiente
 		Environ<IValue> newEnv = env.beginScope();
 		for(Binding decl: decls){
 			IValue idValue = decl.getExpr().eval(env);
 			newEnv.assoc(decl.getID(),idValue);
 		}
-		
 		value = expr.eval(newEnv);
 		newEnv.endScope();
 		return value;
@@ -84,9 +82,6 @@ public class ASTDecl implements ASTNode{
 		code.emit_astore();
 		expr.compile(code, scope);
 		code.endFrame(scope.getType(), scope.getAncestor().getType());
-		
-		if(env.getType() == 0)
-			env.counter=0;
 	}
 	
 	

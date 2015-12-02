@@ -121,7 +121,8 @@ public class CodeBlock {
 		code.add("dup");
 		code.add("invokespecial frame_" + type + "/<init>()V");
 		code.add("dup");	
-		if(type != 1){
+		//if(type != 1){
+		if(type > 1 && env.getAncestor().getType() != 0){
 			emit_aload();
 			code.add("putfield frame_" + type + "/SL Lframe_" + env.getAncestor().getType() + ";");
 			code.add("dup");
@@ -130,6 +131,20 @@ public class CodeBlock {
 	}
 	
 	public void endFrame(int frame, int father){
+		
+		/*
+		 * aload 1
+			checkcast frame_4
+			getfield frame_4/SL Lframe_1;
+			astore 1
+		 */
+		if(frame > 1 && father != 0){
+			emit_aload();
+			code.add("checkcast frame_" + frame);
+			code.add("getfield frame_" + frame + "/SL Lframe_"+father+";");
+			emit_astore();
+		}
+
 		if(frame == 1){
 			code.add("aconst_null");
 			emit_astore();
@@ -144,8 +159,7 @@ public class CodeBlock {
 		code.add("checkcast "+type);
 	}
 
-	
-		public void emit_refInt(){
+	public void emit_refInt(){
 		code.add("new ref_int");
 		code.add("dup");
 		code.add("invokespecial ref_int/<init>()V");
@@ -270,7 +284,7 @@ public class CodeBlock {
 				out.println(".implements frame");
 				out.println();
 				
-				if(frame.getType() != 1){
+				if(frame.getType() != 1 && frame.getAncestor().getType() != 0){
 					out.println(".field public SL Lframe_" + frame.getAncestor().getType() + ";");
 					out.println();
 				}
