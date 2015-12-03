@@ -39,10 +39,10 @@ public class Interpreter {
 				System.out.println("Duplicate Identifier "+e.getId());
 				parser.ReInit(System.in);
 			} catch (TypeErrorException e) {
-				System.out.println("Type Error: "+e.getMessage());
+				System.out.println("Type Error: "+e.getId());
 				parser.ReInit(System.in);
 			} catch (ExecutionErrorException e) {
-				System.out.println("Execution Error: "+e.getMessage());
+				System.out.println("Execution Error: "+e.getId());
 				parser.ReInit(System.in);
 			}
 	    }

@@ -28,11 +28,14 @@ public class ASTFun implements ASTNode {
 		Environ<Type> envLoc = env.beginScope();
 		//TODO: erro
 		//parType = envLoc.findType(id);
-		parType = ((funType) type).getParType();
+		funType t = ((funType) type);
+		parType = t.getParType();
+		Type typeBo = t.getResultType();
 		envLoc.assocType(id, parType);
 		Type returnType = exp.typeCheck(envLoc);
-		
-		return new funType(parType, returnType);
+		if(typeBo.equals(returnType))
+			return new funType(parType, returnType);
+		else throw new TypeErrorException("Expecting diferent types");
 	}
 
 
