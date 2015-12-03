@@ -9,12 +9,12 @@ public class ASTDiv implements ASTNode{
 	
 	ASTNode left, right;
 
-	public IValue eval(Environ<IValue> env) throws UndeclaredIdentifierException, DuplicateIdentifierException 
+	public IValue eval(Environ<IValue> env) throws UndeclaredIdentifierException, DuplicateIdentifierException, ExecutionErrorException 
 	{ 
 		return new IntegerValue(((IntegerValue)left.eval(env)).getValue()/((IntegerValue)right.eval(env)).getValue()); 
 	}
 	
-	public Type typeCheck(Environ<Type> env) throws TypeErrorException{
+	public Type typeCheck(Environ<Type> env) throws TypeErrorException, DuplicateIdentifierException, UndeclaredIdentifierException{
 		Type t1 = left.typeCheck(env);
 		Type t2 = right.typeCheck(env);
 		if (t1==IntType.value && t2==IntType.value)

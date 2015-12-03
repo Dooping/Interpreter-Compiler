@@ -54,8 +54,6 @@ TOKEN :
   |
   < DO : "do" >
   |
-  < FUNCTION : "fun" >
-  |
   < ASSOC : "=" >
   |
   < IF : "if" >
@@ -97,6 +95,20 @@ TOKEN :
   < OR : "||" >
   |
   < EL: "\n" >
+  |
+  < FUN : "fun" >
+  |
+  < ARROW : "=>" >
+  |
+    < ARROWT : "->" >
+  |
+    < INT : "int" >
+  |
+   < BOOLEAN : "bool" >
+  |
+    < REF : "ref" >
+  |
+  < COLON : ":" >
   |
   < VAR: "var" >
   |
@@ -174,7 +186,7 @@ ASTNode Cmp():
 {Token op;
   ASTNode d1, d2;}
 {
-     d1 = Fact() ( ( op=<BIGGER> | op=<SMALLER> | op=<EQUALS> | op=<DIF>) d2=Fact()
+     d1 = Call() ( ( op=<BIGGER> | op=<SMALLER> | op=<EQUALS> | op=<DIF>) d2=Call()
     			 { if (op.kind == BIGGER)    			 {
     			    d1 = new ASTBigger(d1,d2);
     			  }	
@@ -193,12 +205,27 @@ ASTNode Cmp():
      { return d1; } 
 }
 
+ASTNode Call():
+{
+  ASTNode f1,f2;
+}
+{
 
+  f1=Fact() (
+    < LPAR > f2=Texp() < RPAR >
+    {
+      f1 = new ASTCall(f1,f2);    }    
+    )*
+  {
+    return f1;
+  }
+}
 
 
 ASTNode Fact() :
 { Token n; 
-  ASTNode t, t1,t2;}
+  ASTNode t, t1,t2;
+  Type ty;}
 {
 
     n=<Num> { t = new ASTNum(Integer.parseInt(n.image)); return t; }
@@ -210,7 +237,8 @@ ASTNode Fact() :
    | n = <Id> { return new ASTId(n.image); }
    | t = Decl() {   return t; }
    | <WHILE> t = Texp() <DO> t1 = Texp()  <END> { t = new ASTWhile(t,t1); return t;}
-   | <IF> t = Texp() <THEN> t1 = Texp()  <ELSE> t2=Texp() < END > { t = new ASTIf(t,t1,t2); return t;}         
+   | <IF> t = Texp() <THEN> t1 = Texp()  <ELSE> t2=Texp() < END > { t = new ASTIf(t,t1,t2); return t;}
+   |< FUN >n=<Id ><COLON > ty = type()<ARROW> t = Texp() < END > {return new ASTFun(n.image,t,ty);}         
 }
 
 ASTNode Decl():
@@ -228,6 +256,49 @@ ASTNode Decl():
  {
    return new ASTDecl(bindings,t2);
  }
+
+}
+
+
+
+Type type():
+{
+  Type t1,t2;
+}
+{
+	t1 = baseType() ( <ARROWT> t2=type()
+	{
+	  t1 = new funType(t1,t2);
+	}
+	)?
+	{
+	  return t1;
+	}
+	
+}
+
+Type baseType():
+{
+    Type t1,t2;
+}
+{
+  < INT >
+  {
+    return IntType.value;
+  }
+  
+|
+< BOOLEAN >
+{
+  return BoolType.value;
+}
+
+|
+< REF ><LPAR > t1 = type()< RPAR >
+{
+  
+return new RefType(t1);
+}
 
 }
 

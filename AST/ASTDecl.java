@@ -21,7 +21,7 @@ public class ASTDecl implements ASTNode{
 		expr = e;
 	}
 
-	public IValue eval(Environ<IValue> env) throws UndeclaredIdentifierException, DuplicateIdentifierException{
+	public IValue eval(Environ<IValue> env) throws UndeclaredIdentifierException, DuplicateIdentifierException, ExecutionErrorException{
 		IValue value;
 		//novo ambiente
 		Environ<IValue> newEnv = env.beginScope();
@@ -33,7 +33,7 @@ public class ASTDecl implements ASTNode{
 		newEnv.endScope();
 		return value;
 	}
-	public Type typeCheck(Environ<Type> env) throws TypeErrorException{
+	public Type typeCheck(Environ<Type> env) throws TypeErrorException, DuplicateIdentifierException, UndeclaredIdentifierException{
 		Type value;
 		Environ<Type> newEnv = env.beginScope();
 		TypesOfVar = new ArrayList<Type>();
@@ -42,7 +42,6 @@ public class ASTDecl implements ASTNode{
 			try {
 				newEnv.assocType(decl.getID(),idType);
 			} catch (DuplicateIdentifierException e) {
-				//e.printStackTrace();
 			}
 			TypesOfVar.add(idType);
 		}

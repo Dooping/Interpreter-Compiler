@@ -1,12 +1,19 @@
-package types;
+package Types;
 
-public class funType implements IType{
+public class funType implements Type{
+	
+	Type parType, resultType;
 
-	public funType(IType parType, IType exp){
-		
+	public funType(Type parType, Type exp){
+		this.parType = parType;
+		this.resultType = exp;
 	}
 
-	public Object getParType() {
-		return null;
+	public Type getParType() {
+		return parType;
+	}
+	
+	public Type getResultType() {
+		return resultType;
 	}
 }

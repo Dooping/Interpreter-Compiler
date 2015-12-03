@@ -10,7 +10,7 @@ import Values.*;
 
 public class Interpreter {
 
-	public static IValue evaluate(String s) throws ParseException, UndeclaredIdentifierException, DuplicateIdentifierException, TypeErrorException {
+	public static IValue evaluate(String s) throws ParseException, UndeclaredIdentifierException, DuplicateIdentifierException, TypeErrorException,ExecutionErrorException {
 		Parser parser = new Parser(new ByteArrayInputStream(s.getBytes()));
 		ASTNode exp = parser.Start();
 		Type type = exp.typeCheck(new Environ<Type>());
@@ -41,7 +41,10 @@ public class Interpreter {
 			} catch (TypeErrorException e) {
 				System.out.println("Type Error: "+e.getMessage());
 				parser.ReInit(System.in);
-			} 
+			} catch (ExecutionErrorException e) {
+				System.out.println("Execution Error: "+e.getMessage());
+				parser.ReInit(System.in);
+			}
 	    }
 	}
 }

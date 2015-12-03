@@ -10,7 +10,7 @@ public class ASTSmaller implements ASTNode{
 
 	ASTNode left, right;
 	
-	public IValue eval(Environ<IValue> env) throws UndeclaredIdentifierException, DuplicateIdentifierException 
+	public IValue eval(Environ<IValue> env) throws UndeclaredIdentifierException, DuplicateIdentifierException, ExecutionErrorException 
 	{ 
 		if(((IntegerValue)left.eval(env)).getValue() < ((IntegerValue)right.eval(env)).getValue()){
 			return new BooleanValue(true); 
@@ -19,7 +19,7 @@ public class ASTSmaller implements ASTNode{
 		
 	}
 	
-	public Type typeCheck(Environ<Type> env) throws TypeErrorException{
+	public Type typeCheck(Environ<Type> env) throws TypeErrorException, DuplicateIdentifierException, UndeclaredIdentifierException{
 		Type t1 = left.typeCheck(env);
 		Type t2 = right.typeCheck(env);
 		if (t1==IntType.value && t2==IntType.value)

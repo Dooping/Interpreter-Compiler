@@ -16,12 +16,12 @@ public class ASTId implements ASTNode{
 		this.id = id;
 	}
 	
-	public IValue eval(Environ<IValue> env) throws UndeclaredIdentifierException, DuplicateIdentifierException 
+	public IValue eval(Environ<IValue> env) throws UndeclaredIdentifierException, DuplicateIdentifierException, ExecutionErrorException 
 	{ 
 		return env.find(id);
 	}
 	
-	public Type typeCheck(Environ<Type> env) throws TypeErrorException{
+	public Type typeCheck(Environ<Type> env) throws TypeErrorException, DuplicateIdentifierException, UndeclaredIdentifierException{
 		try {
 			type = env.findType(id);
 		} catch (UndeclaredIdentifierException e) {

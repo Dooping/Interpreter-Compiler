@@ -21,7 +21,7 @@ public class ASTIf implements ASTNode{
 
 	
 	
-	public IValue eval(Environ<IValue> e) throws UndeclaredIdentifierException,DuplicateIdentifierException {
+	public IValue eval(Environ<IValue> e) throws UndeclaredIdentifierException,DuplicateIdentifierException, ExecutionErrorException {
 		BooleanValue v =  (BooleanValue) clause.eval(e);
 		if(v.val){
 			return bodyThen.eval(e);
@@ -30,7 +30,7 @@ public class ASTIf implements ASTNode{
 
 	}
 
-	public Type typeCheck(Environ<Type> env) throws TypeErrorException {
+	public Type typeCheck(Environ<Type> env) throws TypeErrorException, DuplicateIdentifierException, UndeclaredIdentifierException {
 		Type c = clause.typeCheck(env);
 		Type t = bodyThen.typeCheck(env);
 		Type e = bodyElse.typeCheck(env);

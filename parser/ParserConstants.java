@@ -21,53 +21,65 @@ public interface ParserConstants {
   /** RegularExpression Id. */
   int DO = 8;
   /** RegularExpression Id. */
-  int FUNCTION = 9;
+  int ASSOC = 9;
   /** RegularExpression Id. */
-  int ASSOC = 10;
+  int IF = 10;
   /** RegularExpression Id. */
-  int IF = 11;
+  int THEN = 11;
   /** RegularExpression Id. */
-  int THEN = 12;
+  int ELSE = 12;
   /** RegularExpression Id. */
-  int ELSE = 13;
+  int RefAssoc = 13;
   /** RegularExpression Id. */
-  int RefAssoc = 14;
+  int TWOEXPR = 14;
   /** RegularExpression Id. */
-  int TWOEXPR = 15;
+  int BOOL = 15;
   /** RegularExpression Id. */
-  int BOOL = 16;
+  int Num = 16;
   /** RegularExpression Id. */
-  int Num = 17;
+  int PLUS = 17;
   /** RegularExpression Id. */
-  int PLUS = 18;
+  int MINUS = 18;
   /** RegularExpression Id. */
-  int MINUS = 19;
+  int TIMES = 19;
   /** RegularExpression Id. */
-  int TIMES = 20;
+  int DIV = 20;
   /** RegularExpression Id. */
-  int DIV = 21;
+  int LPAR = 21;
   /** RegularExpression Id. */
-  int LPAR = 22;
+  int RPAR = 22;
   /** RegularExpression Id. */
-  int RPAR = 23;
+  int BIGGER = 23;
   /** RegularExpression Id. */
-  int BIGGER = 24;
+  int SMALLER = 24;
   /** RegularExpression Id. */
-  int SMALLER = 25;
+  int EQUALS = 25;
   /** RegularExpression Id. */
-  int EQUALS = 26;
+  int DIF = 26;
   /** RegularExpression Id. */
-  int DIF = 27;
+  int AND = 27;
   /** RegularExpression Id. */
-  int AND = 28;
+  int OR = 28;
   /** RegularExpression Id. */
-  int OR = 29;
+  int EL = 29;
   /** RegularExpression Id. */
-  int EL = 30;
+  int FUN = 30;
   /** RegularExpression Id. */
-  int VAR = 31;
+  int ARROW = 31;
   /** RegularExpression Id. */
-  int Id = 32;
+  int ARROWT = 32;
+  /** RegularExpression Id. */
+  int INT = 33;
+  /** RegularExpression Id. */
+  int BOOLEAN = 34;
+  /** RegularExpression Id. */
+  int REF = 35;
+  /** RegularExpression Id. */
+  int COLON = 36;
+  /** RegularExpression Id. */
+  int VAR = 37;
+  /** RegularExpression Id. */
+  int Id = 38;
 
   /** Lexical state. */
   int DEFAULT = 0;
@@ -83,7 +95,6 @@ public interface ParserConstants {
     "\"end\"",
     "\"while\"",
     "\"do\"",
-    "\"fun\"",
     "\"=\"",
     "\"if\"",
     "\"then\"",
@@ -105,6 +116,13 @@ public interface ParserConstants {
     "\"&&\"",
     "\"||\"",
     "\"\\n\"",
+    "\"fun\"",
+    "\"=>\"",
+    "\"->\"",
+    "\"int\"",
+    "\"bool\"",
+    "\"ref\"",
+    "\":\"",
     "\"var\"",
     "<Id>",
   };

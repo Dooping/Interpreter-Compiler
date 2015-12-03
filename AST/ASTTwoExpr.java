@@ -17,13 +17,13 @@ public class ASTTwoExpr implements ASTNode{
 		this.right = r;
 	}
 
-	public IValue eval(Environ<IValue> e) throws UndeclaredIdentifierException,DuplicateIdentifierException {
+	public IValue eval(Environ<IValue> e) throws UndeclaredIdentifierException,DuplicateIdentifierException, ExecutionErrorException {
 		l = left.eval(e);
 		r = right.eval(e);
 		return r;
 	}
 
-	public Type typeCheck(Environ<Type> env) throws TypeErrorException {
+	public Type typeCheck(Environ<Type> env) throws TypeErrorException, DuplicateIdentifierException, UndeclaredIdentifierException {
 		left.typeCheck(env);
 		return right.typeCheck(env);
 	}

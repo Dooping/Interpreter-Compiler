@@ -16,13 +16,13 @@ public class ASTVar implements ASTNode{
 	}
 
 	
-	public IValue eval(Environ<IValue> e) throws UndeclaredIdentifierException, DuplicateIdentifierException {
+	public IValue eval(Environ<IValue> e) throws UndeclaredIdentifierException, DuplicateIdentifierException, ExecutionErrorException {
 		IValue val = expr.eval(e);
 		return new RefValue(val);
 	}
 
 	
-	public Type typeCheck(Environ<Type> env) throws TypeErrorException {
+	public Type typeCheck(Environ<Type> env) throws TypeErrorException, DuplicateIdentifierException, UndeclaredIdentifierException {
 		expType = expr.typeCheck(env);
 		return type = new RefType(expType);
 	}

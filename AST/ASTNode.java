@@ -8,11 +8,9 @@ import main.*;
 
 public interface ASTNode {
 
-	IValue eval(Environ<IValue> e) throws UndeclaredIdentifierException, DuplicateIdentifierException;
-	//IValue eval(Environ<IValue> e)
-	//Type typeCheck(Environ<Type> e)
+	IValue eval(Environ<IValue> e) throws UndeclaredIdentifierException, DuplicateIdentifierException, ExecutionErrorException;
 	
-	Type typeCheck(Environ<Type> env) throws TypeErrorException;
+	Type typeCheck(Environ<Type> env) throws TypeErrorException, DuplicateIdentifierException, UndeclaredIdentifierException;
 	
     void compile( CodeBlock code, CompilerFrame env)throws UndeclaredIdentifierException, DuplicateIdentifierException ;
 

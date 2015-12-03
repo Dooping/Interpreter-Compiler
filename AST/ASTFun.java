@@ -1,47 +1,48 @@
 package AST;
 
-import types.*;
-import util.DuplicateIdentifierException;
-import util.Environment;
-import util.TypeErrorException;
-import util.UndeclaredIdentifierException;
-import values.IValue;
+import Types.*;
+import exceptions.*;
+import Values.*;
+import main.*;
 
 public class ASTFun implements ASTNode {
 	
 	
 	private ASTNode exp;
 	private String id;
-	private IType type;
+	private Type type;
 	
-	public ASTFun (String id, ASTNode e, IType type){
+	public ASTFun (String id, ASTNode e, Type type){
 		this.exp = e;
 		this.id = id;
 		this.type = type;
 	}
 
-	public IValue eval(Environment<IValue> env) throws UndeclaredIdentifierException, DuplicateIdentifierException {
+	public IValue eval(Environ<IValue> env) throws UndeclaredIdentifierException, DuplicateIdentifierException, ExecutionErrorException {
 		return new ClosureValue(id, exp, env);
 	}
 
-	public IType typecheck(Environment<IType> env)
-			throws UndeclaredIdentifierException, DuplicateIdentifierException,
-			TypeErrorException {
-		
-		IType parType;
-		
-		Environment<IType> envLoc = env.beginScope();
-		
-		envLoc.assoc(id, parType);
-		
-		
-		IType returnType = exp.typecheck(envLoc);
-		
-		
-		
+	public Type typeCheck(Environ<Type> env) throws TypeErrorException, DuplicateIdentifierException, UndeclaredIdentifierException{
+
+		Type parType = null;
+		Environ<Type> envLoc = env.beginScope();
+		//TODO: erro
+		//parType = envLoc.findType(id);
+		parType = ((funType) type).getParType();
+		envLoc.assocType(id, parType);
+		Type returnType = exp.typeCheck(envLoc);
 		
 		return new funType(parType, returnType);
+	}
 
+
+	public void compile(CodeBlock code, CompilerFrame env) throws UndeclaredIdentifierException, DuplicateIdentifierException {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	public String toString(){
+		return id;
 	}
 	
 }

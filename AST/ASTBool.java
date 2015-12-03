@@ -10,12 +10,12 @@ public class ASTBool implements ASTNode {
 
 	boolean val;
 
-	public IValue eval(Environ<IValue> env) 
+	public IValue eval(Environ<IValue> env) throws ExecutionErrorException 
 	{ 
 		return new BooleanValue(val); 
 	}
 	
-	public Type typeCheck(Environ<Type> env) throws TypeErrorException{
+	public Type typeCheck(Environ<Type> env) throws TypeErrorException, DuplicateIdentifierException, UndeclaredIdentifierException{
 		return BoolType.value;
 	}
 

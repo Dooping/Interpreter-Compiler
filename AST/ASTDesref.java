@@ -20,13 +20,13 @@ public class ASTDesref  implements ASTNode{
 		this.expr = expr;
 	}
 
-	public IValue eval(Environ<IValue> e) throws UndeclaredIdentifierException,DuplicateIdentifierException {
+	public IValue eval(Environ<IValue> e) throws UndeclaredIdentifierException,DuplicateIdentifierException, ExecutionErrorException {
 		RefValue r = (RefValue) expr.eval(e);
 		return r.getValue();
 	}
 
 	
-	public Type typeCheck(Environ<Type> env) throws TypeErrorException {
+	public Type typeCheck(Environ<Type> env) throws TypeErrorException, DuplicateIdentifierException, UndeclaredIdentifierException {
 		Type t =  expr.typeCheck(env);
 		if(t instanceof RefType){
 			RefType t1 = (RefType)t;

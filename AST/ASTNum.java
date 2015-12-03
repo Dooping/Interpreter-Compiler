@@ -9,12 +9,12 @@ public class ASTNum implements ASTNode {
 
 	int val;
 
-	public IValue eval(Environ<IValue> env) 
+	public IValue eval(Environ<IValue> env) throws ExecutionErrorException 
 	{ 
 		return new IntegerValue(val); 
 	}
 	
-	public Type typeCheck(Environ<Type> env) throws TypeErrorException{
+	public Type typeCheck(Environ<Type> env) throws TypeErrorException, DuplicateIdentifierException, UndeclaredIdentifierException{
 		return IntType.value;
 	}
 

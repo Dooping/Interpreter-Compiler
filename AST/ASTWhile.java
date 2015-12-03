@@ -15,7 +15,7 @@ public class ASTWhile implements ASTNode{
 		this.body = body;
 	}
 
-	public IValue eval(Environ<IValue> e) throws UndeclaredIdentifierException,DuplicateIdentifierException {
+	public IValue eval(Environ<IValue> e) throws UndeclaredIdentifierException,DuplicateIdentifierException, ExecutionErrorException {
 		IValue i =  body.eval(e);
 		BooleanValue v =  (BooleanValue) clause.eval(e);
 		while(v.val){
@@ -27,7 +27,7 @@ public class ASTWhile implements ASTNode{
 		return v;
 	}
 
-	public Type typeCheck(Environ<Type> env) throws TypeErrorException {
+	public Type typeCheck(Environ<Type> env) throws TypeErrorException, DuplicateIdentifierException, UndeclaredIdentifierException {
 		Type t1 = clause.typeCheck(env);
 		Type t2 = body.typeCheck(env);
 		if( t1 == BoolType.value ) 

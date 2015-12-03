@@ -18,7 +18,7 @@ public class ASTAssign implements ASTNode{
 		this.right = right;
 	}
 	
-	public IValue eval(Environ<IValue> e) throws UndeclaredIdentifierException,DuplicateIdentifierException {
+	public IValue eval(Environ<IValue> e) throws UndeclaredIdentifierException,DuplicateIdentifierException, ExecutionErrorException {
 		IValue l = left.eval(e);
 		IValue r = right.eval(e);
 
@@ -28,7 +28,7 @@ public class ASTAssign implements ASTNode{
 	}
 
 	
-	public Type typeCheck(Environ<Type> env) throws TypeErrorException {
+	public Type typeCheck(Environ<Type> env) throws TypeErrorException, DuplicateIdentifierException, UndeclaredIdentifierException {
 		Type l =  left.typeCheck(env);
 		rightType = right.typeCheck(env);
 		if(l instanceof RefType){
