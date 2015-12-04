@@ -98,9 +98,11 @@ TOKEN :
   |
   < FUN : "fun" >
   |
+   < FUNT : "funT" >
+  |
   < ARROW : "=>" >
   |
-    < ARROWT : "->" >
+   < ARROWT : "->" >
   |
     < INT : "int" >
   |
@@ -296,9 +298,9 @@ Type baseType():
 |
 < REF ><LPAR > t1 = type()< RPAR >
 {
-  
 return new RefType(t1);
 }
+
 
 }
 

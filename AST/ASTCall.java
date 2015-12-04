@@ -40,12 +40,7 @@ public class ASTCall implements ASTNode {
 		
 		if(leftType instanceof funType){
 			funType funT = (funType) leftType;
-			
-			if(funT.getParType().equals(argType))
-				return funT.getResultType();
-			else
-				throw new TypeErrorException("Type mismatch in funtion call");
-			
+			return funT.getResultType();
 		}
 		else throw new TypeErrorException("Calling non-funtion value");
 	}
