@@ -65,21 +65,25 @@ public interface ParserConstants {
   /** RegularExpression Id. */
   int FUN = 30;
   /** RegularExpression Id. */
-  int ARROW = 31;
+  int FUNT = 31;
   /** RegularExpression Id. */
-  int ARROWT = 32;
+  int ARROW = 32;
   /** RegularExpression Id. */
-  int INT = 33;
+  int ARROWT = 33;
   /** RegularExpression Id. */
-  int BOOLEAN = 34;
+  int INT = 34;
   /** RegularExpression Id. */
-  int REF = 35;
+  int BOOLEAN = 35;
   /** RegularExpression Id. */
-  int COLON = 36;
+  int REF = 36;
   /** RegularExpression Id. */
-  int VAR = 37;
+  int COLON = 37;
   /** RegularExpression Id. */
-  int Id = 38;
+  int COMMA = 38;
+  /** RegularExpression Id. */
+  int VAR = 39;
+  /** RegularExpression Id. */
+  int Id = 40;
 
   /** Lexical state. */
   int DEFAULT = 0;
@@ -117,12 +121,14 @@ public interface ParserConstants {
     "\"||\"",
     "\"\\n\"",
     "\"fun\"",
+    "\"funT\"",
     "\"=>\"",
     "\"->\"",
     "\"int\"",
     "\"bool\"",
     "\"ref\"",
     "\":\"",
+    "\",\"",
     "\"var\"",
     "<Id>",
   };

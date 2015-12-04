@@ -112,6 +112,8 @@ TOKEN :
   |
   < COLON : ":" >
   |
+  < COMMA : "," >
+  |
   < VAR: "var" >
   |
   < Id: ["a"-"z","A"-"Z"] ( ["a"-"z","A"-"Z","0"-"9"] )* >
@@ -227,7 +229,10 @@ ASTNode Call():
 ASTNode Fact() :
 { Token n; 
   ASTNode t, t1,t2;
-  Type ty;}
+  Type ty;
+	ArrayList<String> ids = new ArrayList <String>();
+	ArrayList<Type> types= new ArrayList <Type>();
+  }
 {
 
     n=<Num> { t = new ASTNum(Integer.parseInt(n.image)); return t; }
@@ -240,7 +245,13 @@ ASTNode Fact() :
    | t = Decl() {   return t; }
    | <WHILE> t = Texp() <DO> t1 = Texp()  <END> { t = new ASTWhile(t,t1); return t;}
    | <IF> t = Texp() <THEN> t1 = Texp()  <ELSE> t2=Texp() < END > { t = new ASTIf(t,t1,t2); return t;}
-   |< FUN >n=<Id ><COLON > ty = type()<ARROW> t = Texp() < END > {return new ASTFun(n.image,t,ty);}         
+   |
+   < FUN> n=<Id >   {ids.add(n.image);}
+   (<COMMA> n=<Id>{ids.add(n.image);})*
+    <COLON>
+    ty = type(){types.add(ty); }
+    (<COMMA> ty = type(){types.add(ty);})*
+   <ARROW> t = Texp() < END > {return new ASTFun(ids,t,types);}         
 }
 
 ASTNode Decl():
@@ -266,9 +277,15 @@ ASTNode Decl():
 Type type():
 {
   Type t1,t2;
+  ArrayList<Type> types= new ArrayList <Type>();
 }
 {
-	t1 = baseType() ( <ARROWT> t2=type()
+  	//pairType
+	t1 = baseType()  { types.add(t1); }
+	 ( < COMMA> t1 = baseType() {types.add(t1);}
+  		)*
+
+	( <ARROWT> t2=type()
 	{
 	  t1 = new funType(t1,t2);
 	}
@@ -278,6 +295,23 @@ Type type():
 	}
 	
 }
+Type parType():
+{	  Type t1,t2;
+}
+{t1 = baseType()  { types.add(t1); }
+	 ( < COMMA> t1 = baseType() {types.add(t1);}
+  		)*
+
+	( <COMMA> t2=baseType()
+	{
+	  t1 = new PairType(t1,t2);
+	}
+	)*
+	{
+	  return t1;
+	}
+}
+
 
 Type baseType():
 {
