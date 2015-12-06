@@ -18,15 +18,12 @@ public class ASTNegate implements ASTNode {
 		this.expr = expr;
 	}
 
-	@Override
-	public IValue eval(Environ<IValue> e)
-			throws UndeclaredIdentifierException, DuplicateIdentifierException, ExecutionErrorException {
+
+	public IValue eval(Environ<IValue> e)throws UndeclaredIdentifierException, DuplicateIdentifierException, ExecutionErrorException {
 		return new BooleanValue(!((BooleanValue)expr.eval(e)).getValue());
 	}
 
-	@Override
-	public Type typeCheck(Environ<Type> env)
-			throws TypeErrorException, DuplicateIdentifierException, UndeclaredIdentifierException {
+	public Type typeCheck(Environ<Type> env)throws TypeErrorException, DuplicateIdentifierException, UndeclaredIdentifierException {
 		Type type = expr.typeCheck(env);
 		if(type instanceof BoolType)
 			return BoolType.value;
@@ -34,15 +31,14 @@ public class ASTNegate implements ASTNode {
 			throw new TypeErrorException("Value is not Boolean");
 	}
 
-	@Override
-	public void compile(CodeBlock code, CompilerFrame env)
-			throws UndeclaredIdentifierException, DuplicateIdentifierException {
+
+	public void compile(CodeBlock code, CompilerFrame env)throws UndeclaredIdentifierException, DuplicateIdentifierException {
 		expr.compile(code, env);
 		code.emit_push(1);
 		code.emit_xor();
 	}
 	
-	@Override
+	
 	public String toString(){
 		return "!"+expr.toString();
 	}
