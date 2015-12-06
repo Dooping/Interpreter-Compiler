@@ -1,6 +1,8 @@
 package AST;
 
 import java.util.ArrayList;
+import java.util.Map;
+import java.util.TreeMap;
 
 import Types.*;
 import exceptions.*;
@@ -10,27 +12,27 @@ import main.*;
 public class ASTRecord implements ASTNode{
 	
 	ArrayList <Binding> values;
-	ArrayList<Type> TypesOfVar;
+	private Map<String, Type> types = new TreeMap<String, Type>();
+	private Map<String, IValue> Ivalues;
 	
 	public ASTRecord(ArrayList <Binding> ds){
 		values = ds;
 	}
 
 	public IValue eval(Environ<IValue> e) throws UndeclaredIdentifierException,DuplicateIdentifierException, ExecutionErrorException {
+		Ivalues = new TreeMap<String, IValue>();
 		for(Binding value: values)
-			value.getExpr().eval(e);
-		return new RecordValue(values);
+			Ivalues.put(value.getID(), value.getExpr().eval(e)) ;
+		return new RecordValue(Ivalues);
 	}
 
 	public Type typeCheck(Environ<Type> env) throws TypeErrorException,DuplicateIdentifierException, UndeclaredIdentifierException {
-		Type idType = null;
-		TypesOfVar = new ArrayList<Type>();
+		types = new TreeMap<String, Type>();
 		for(Binding value: values){
-			value.getExpr().typeCheck(env);
-			TypesOfVar.add(idType);
+			types.put(value.getID(), value.getExpr().typeCheck(env));
 		}
 	
-		return new RecordType(values);
+		return new RecordType(types);
 	}
 
 	public void compile(CodeBlock code, CompilerFrame env)throws UndeclaredIdentifierException, DuplicateIdentifierException {
@@ -45,6 +47,4 @@ public class ASTRecord implements ASTNode{
 		toReturn+=" }";
 		return toReturn;
 	}
-	
-	
 }

@@ -1,6 +1,7 @@
 package AST;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import Types.*;
 import exceptions.*;
@@ -18,13 +19,12 @@ public class ASTCallRecord implements ASTNode{
 	}
 
 	public IValue eval(Environ<IValue> e) throws UndeclaredIdentifierException,DuplicateIdentifierException, ExecutionErrorException {
+		//System.out.println(id);
 		IValue iv = record.eval(e);
 		if( iv instanceof RecordValue){
-			ArrayList <Binding> types = ( (RecordValue) iv).getBind();
-			for(Binding type: types){
-				if(type.getID().equals(id)){
-					return type.getExpr().eval(e);
-				}
+			Map<String, IValue> values = ( (RecordValue) iv).getValues();
+			if(values.containsKey(id)){
+				return values.get(id);
 			}
 		}
 		return iv;
@@ -33,22 +33,17 @@ public class ASTCallRecord implements ASTNode{
 	public Type typeCheck(Environ<Type> env) throws TypeErrorException,DuplicateIdentifierException, UndeclaredIdentifierException {
 		Type recordType = record.typeCheck(env);
 		if( recordType instanceof RecordType ){
-			ArrayList <Binding> types = ( (RecordType) recordType).getTypes();
-			for(Binding type: types){
-				if(type.getID().equals(id)){
-					return type.getExpr().typeCheck(env);
-				}
+			Map<String, Type> types = ( (RecordType) recordType).getTypes();
+			if(types.containsKey(id)){
+				return types.get(id);
 			}
+			else throw new UndeclaredIdentifierException("Expecting record identifier");
 		}
 		else throw new TypeErrorException("Expecting recordType");
 
-		throw new UndeclaredIdentifierException("Expecting record identifier");
 	}
 
-	public void compile(CodeBlock code, CompilerFrame env)
-			throws UndeclaredIdentifierException, DuplicateIdentifierException {
-		// TODO Auto-generated method stub
-		
+	public void compile(CodeBlock code, CompilerFrame env) throws UndeclaredIdentifierException, DuplicateIdentifierException {
 	}
 	
 	public String toString(){
