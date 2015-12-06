@@ -84,7 +84,7 @@ TOKEN :
   |
   < RPAR : ")" >
   |
-  < LCHAV : "{ " >
+  < LCHAV : "{" >
   |
   < RCHAV : "}" >
   |
@@ -255,6 +255,7 @@ ASTNode Fact() :
 { Token n; 
   ASTNode t, t1,t2;
   Type ty;
+  ArrayList <Binding> bindings = new ArrayList<Binding>();
   }
 {
 
@@ -269,9 +270,8 @@ ASTNode Fact() :
    | <WHILE> t = Texp() <DO> t1 = Texp()  <END> { t = new ASTWhile(t,t1); return t;}
    | <IF> t = Texp() <THEN> t1 = Texp()  <ELSE> t2=Texp() < END > { t = new ASTIf(t,t1,t2); return t;}
    | < FUN> n=<Id > <COLON> ty = type()<ARROW> t = Texp() < END > {return new ASTFun(n.image,t,ty);}
-   | t = Record(){   return t; }         
+   | <LCHAV> t = Record() <RCHAV>{return t; }            
 }
-
 
 
 ASTNode Record():
@@ -280,11 +280,17 @@ ASTNode Record():
   Token x;
   ArrayList <Binding> bindings = new ArrayList<Binding>();
 }
-{	<RCHAV> x=<Id><EQUALS> t = Texp(){ bindings.add(new Binding (x.image, t));}
-	(<COMMA> x=<Id><EQUALS> t = Texp() { bindings.add(new Binding (x.image, t));}  )+ <LCHAV>
-	{	  return new ASTRecord(bindings);	}	 
+{
+	 x=<Id><ASSOC> t = Fact() 
+	{ bindings.add(new Binding (x.image, t));}
+	(<COMMA> x=<Id><ASSOC> t = Texp() { bindings.add(new Binding (x.image, t));}  )+
+	{
+	  return new ASTRecord(bindings);
+	}
+	 
 
 }
+
 
 ASTNode Decl():
 {

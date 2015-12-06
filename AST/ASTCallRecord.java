@@ -18,11 +18,16 @@ public class ASTCallRecord implements ASTNode{
 	}
 
 	public IValue eval(Environ<IValue> e) throws UndeclaredIdentifierException,DuplicateIdentifierException, ExecutionErrorException {
-		IValue ide = id.eval(e);
 		return null;
 	}
 
 	public Type typeCheck(Environ<Type> env) throws TypeErrorException,DuplicateIdentifierException, UndeclaredIdentifierException {
+		Type recordType = record.typeCheck(env);
+		
+		if( recordType instanceof RecordType){
+			
+		}
+		else throw new TypeErrorException("Expecting recordType");
 		
 		return null;
 	}

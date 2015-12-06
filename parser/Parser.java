@@ -291,6 +291,7 @@ public class Parser implements ParserConstants {
   Token n;
   ASTNode t, t1,t2;
   Type ty;
+  ArrayList <Binding> bindings = new ArrayList<Binding>();
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case Num:
       n = jj_consume_token(Num);
@@ -359,9 +360,11 @@ public class Parser implements ParserConstants {
       jj_consume_token(END);
                                                                    {if (true) return new ASTFun(n.image,t,ty);}
       break;
-    case RCHAV:
+    case LCHAV:
+      jj_consume_token(LCHAV);
       t = Record();
-                     {if (true) return t;}
+      jj_consume_token(RCHAV);
+                                  {if (true) return t;}
       break;
     default:
       jj_la1[12] = jj_gen;
@@ -375,18 +378,17 @@ public class Parser implements ParserConstants {
   ASTNode t;
   Token x;
   ArrayList <Binding> bindings = new ArrayList<Binding>();
-    jj_consume_token(RCHAV);
     x = jj_consume_token(Id);
-    jj_consume_token(EQUALS);
-    t = Texp();
-                                           bindings.add(new Binding (x.image, t));
+    jj_consume_token(ASSOC);
+    t = Fact();
+          bindings.add(new Binding (x.image, t));
     label_8:
     while (true) {
       jj_consume_token(COMMA);
       x = jj_consume_token(Id);
-      jj_consume_token(EQUALS);
+      jj_consume_token(ASSOC);
       t = Texp();
-                                             bindings.add(new Binding (x.image, t));
+                                            bindings.add(new Binding (x.image, t));
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case COMMA:
         ;
@@ -396,7 +398,6 @@ public class Parser implements ParserConstants {
         break label_8;
       }
     }
-    jj_consume_token(LCHAV);
           {if (true) return new ASTRecord(bindings);}
     throw new Error("Missing return statement in function");
   }
@@ -489,7 +490,7 @@ public class Parser implements ParserConstants {
       jj_la1_init_1();
    }
    private static void jj_la1_init_0() {
-      jj_la1_0 = new int[] {0x8000,0x4000,0xc0000,0xc0000,0x300000,0x300000,0xc0000000,0xc0000000,0x3c000000,0x3c000000,0x400000,0x400,0x25b0890,0x0,0x0,0x0,0x0,};
+      jj_la1_0 = new int[] {0x8000,0x4000,0xc0000,0xc0000,0x300000,0x300000,0xc0000000,0xc0000000,0x3c000000,0x3c000000,0x400000,0x400,0x15b0890,0x0,0x0,0x0,0x0,};
    }
    private static void jj_la1_init_1() {
       jj_la1_1 = new int[] {0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0xc02,0x200,0x800,0x10,0xe0,};
