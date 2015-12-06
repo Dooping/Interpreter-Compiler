@@ -13,7 +13,6 @@ import Values.*;
 
 /** ID lister. */
 public class Parser {
-
   /** Main entry point. */
   public static void main(String args[]) {
     Parser parser = new Parser(System.in);
@@ -363,6 +362,9 @@ Type type():
 Type baseType():
 {
     Type t1,t2;
+    ArrayList <String> ids = new ArrayList<String>();
+     ArrayList <Type> types = new ArrayList<Type>();
+    Token x;
 }
 {
   < INT >
@@ -381,7 +383,13 @@ Type baseType():
 {
 return new RefType(t1);
 }
-
+|
+	< LCHAV > x=<Id><COLON> t1 = type()		{ types.add(t1); ids.add(x.image);}
+		(<COMMA> x=<Id><COLON> t1 = type() { types.add(t1); ids.add(x.image);}  )*
+	<RCHAV>
+	{
+		return new RecordType(types, ids);
+	}
 
 }
 

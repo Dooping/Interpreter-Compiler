@@ -20,4 +20,8 @@ public class funType implements Type{
 	public Type getResultType() {
 		return resultType;
 	}
+	
+	public String toString(){
+		return "FunType";
+	}
 }

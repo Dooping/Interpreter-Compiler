@@ -1,23 +1,24 @@
 package Values;
 
-import java.util.ArrayList;
+import java.util.Map;
+import java.util.TreeMap;
 
-import main.Binding;
 
 
 public class RecordValue implements IValue{
 	
-	private ArrayList <Binding> values;
+	private Map<String, IValue> values = new TreeMap<String, IValue>();
 	
-	public RecordValue (ArrayList <Binding> v){
+	
+	public RecordValue (Map<String, IValue> v){
 		values = v;
 	}
 	
-	public ArrayList<Binding> getBind(){
+	public Map<String, IValue> getValues(){
 		return values;
 	}
 	
 	public String toString(){
-		return ""+ values.get(values.size()-1).toString();
+		return  values.toString();
 	}
 }

@@ -21,9 +21,7 @@ public class ASTAssign implements ASTNode{
 	public IValue eval(Environ<IValue> e) throws UndeclaredIdentifierException,DuplicateIdentifierException, ExecutionErrorException {
 		IValue l = left.eval(e);
 		IValue r = right.eval(e);
-
 		((RefValue) l).setValue(r);
-
 		return r;
 	}
 

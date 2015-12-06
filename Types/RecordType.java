@@ -1,6 +1,8 @@
 package Types;
 
 import java.util.ArrayList;
+import java.util.Map;
+import java.util.TreeMap;
 
 import main.Binding;
 
@@ -8,14 +10,20 @@ import main.Binding;
 
 public class RecordType implements Type{
 	
-	private ArrayList <Binding> types;
-	
-	public RecordType (ArrayList <Binding> t){
+	private ArrayList<String> ids;
+	private ArrayList<Type> types;
+
+	public RecordType (ArrayList<Type> t, ArrayList<String> i){
 		this.types = t;
+		this.ids = i;
 	}
 	
-	public ArrayList <Binding> getTypes(){
+	public ArrayList<Type> getTypes(){
 		return types;
+	}
+	
+	public ArrayList<String> getIds(){
+		return ids;
 	}
 
 	
