@@ -437,7 +437,7 @@ public class Parser implements ParserConstants {
       break;
     case NEGATE:
       jj_consume_token(NEGATE);
-      t = Bexp();
+      t = Fact();
                          {if (true) return new ASTNegate(t);}
       break;
     default:
