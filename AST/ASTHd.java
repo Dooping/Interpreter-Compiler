@@ -22,9 +22,9 @@ public class ASTHd implements ASTNode {
 	
 	public Type typeCheck(Environ<Type> env)throws TypeErrorException, DuplicateIdentifierException, UndeclaredIdentifierException {
 		Type l = list.typeCheck(env);
-			if(l instanceof ListType)
-				return l; 
-			throw new TypeErrorException("Expecting a list");
+		if(l instanceof ListType)
+			return l; 
+		throw new TypeErrorException("Expecting a list");
 	}
 
 

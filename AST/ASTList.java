@@ -35,9 +35,9 @@ ASTNode hd, tl;
 
 	
 	public Type typeCheck(Environ<Type> env)throws TypeErrorException, DuplicateIdentifierException, UndeclaredIdentifierException {
-		hd.typeCheck(env);/////
+		hd.typeCheck(env);
 		if(tl!=null)
-			tl.typeCheck(env);/////
+			tl.typeCheck(env);
 		return ListType.value;
 	}
 

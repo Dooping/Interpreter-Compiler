@@ -1,5 +1,6 @@
 package AST;
 
+import Types.ListType;
 import Types.Type;
 import Values.IListValue;
 import Values.IValue;
@@ -25,16 +26,16 @@ public class ASTTl implements ASTNode {
 		return ((IListValue)list.eval(e)).tl();
 	}
 
-	
-	public Type typeCheck(Environ<Type> env) throws TypeErrorException, DuplicateIdentifierException, UndeclaredIdentifierException {
 
-		return list.typeCheck(env);
+	public Type typeCheck(Environ<Type> env) throws TypeErrorException, DuplicateIdentifierException, UndeclaredIdentifierException {
+		Type l = list.typeCheck(env);
+		if(l instanceof ListType)
+			return l; 
+		throw new TypeErrorException("Expecting a list");
 	}
 
 	
-	public void compile(CodeBlock code, CompilerFrame env)
-			throws UndeclaredIdentifierException, DuplicateIdentifierException {
-		// TODO Auto-generated method stub
+	public void compile(CodeBlock code, CompilerFrame env)throws UndeclaredIdentifierException, DuplicateIdentifierException {
 
 	}
 

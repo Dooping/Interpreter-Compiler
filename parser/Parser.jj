@@ -163,9 +163,10 @@ ASTNode Concat() :
 ASTNode List() :
 { ASTNode t1,t2;}
 {
-   t1 =REF() ((	< TWOEXPR > t2 =List() {t1 = new ASTList(t1,t2);})+
+   t1 =REF() (   (< TWOEXPR > t2 =List() {t1 = new ASTList(t1,t2);})+
 				 |
-				 (				   < RBRACKET >{t1 = new ASTList(t1,null);}))
+				 (				   < RBRACKET >{t1 = new ASTList(t1,null);})
+				   )
    {return t1;}
 }
 
