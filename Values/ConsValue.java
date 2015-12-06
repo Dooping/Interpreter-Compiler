@@ -22,7 +22,7 @@ public class ConsValue implements IListValue {
 	
 	
 	public String toString(){
-		return hd.toString();
+		return "("+hd.toString()+";"+tl.toString()+")";
 	}
 
 }

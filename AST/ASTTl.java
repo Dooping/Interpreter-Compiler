@@ -38,5 +38,10 @@ public class ASTTl implements ASTNode {
 	public void compile(CodeBlock code, CompilerFrame env)throws UndeclaredIdentifierException, DuplicateIdentifierException {
 
 	}
+	
+	@Override
+	public String toString(){
+		return "hd "+list.toString();
+	}
 
 }
