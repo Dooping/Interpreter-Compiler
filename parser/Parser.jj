@@ -56,6 +56,8 @@ TOKEN :
   |
   < ASSOC : "=" >
   |
+   <DOT  : "." >
+  |
   < IF : "if" >
   |
   < THEN : "then" >
@@ -119,7 +121,6 @@ TOKEN :
   < COMMA : "," >
   |
   < VAR: "var" >
-  
   |
   < Id: ["a"-"z","A"-"Z"] ( ["a"-"z","A"-"Z","0"-"9"] )* >
 }
@@ -224,6 +225,25 @@ ASTNode Call():
     < LPAR > f2=Texp() < RPAR >
     {
       f1 = new ASTCall(f1,f2);    }    
+    )*
+  {
+    return f1;
+  }
+}
+
+ASTNode CallRecord():
+{
+  ASTNode f1;
+  Token n;
+}
+{
+
+  f1=Fact() (
+    < DOT > n = <Id>
+    {
+      f1 = new ASTCallRecord(f1,n.image);
+    }
+    
     )*
   {
     return f1;

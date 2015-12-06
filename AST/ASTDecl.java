@@ -39,10 +39,7 @@ public class ASTDecl implements ASTNode{
 		TypesOfVar = new ArrayList<Type>();
 		for(Binding decl: decls){
 			Type idType = decl.getExpr().typeCheck(newEnv);
-			try {
-				newEnv.assocType(decl.getID(),idType);
-			} catch (DuplicateIdentifierException e) {
-			}
+			newEnv.assocType(decl.getID(),idType);
 			TypesOfVar.add(idType);
 		}
 	
@@ -51,7 +48,6 @@ public class ASTDecl implements ASTNode{
 		return value;
 	}
 
-	@SuppressWarnings("static-access")
 	public void compile(CodeBlock code, CompilerFrame env)throws UndeclaredIdentifierException, DuplicateIdentifierException {
 		code.comment("decl");
 		CompilerFrame scope = env.beginScope();
