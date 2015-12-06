@@ -99,7 +99,9 @@ public interface ParserConstants {
   /** RegularExpression Id. */
   int TL = 47;
   /** RegularExpression Id. */
-  int Id = 48;
+  int NEGATE = 48;
+  /** RegularExpression Id. */
+  int Id = 49;
 
   /** Lexical state. */
   int DEFAULT = 0;
@@ -154,6 +156,7 @@ public interface ParserConstants {
     "\"::\"",
     "\"hd\"",
     "\"tl\"",
+    "\"!\"",
     "<Id>",
   };
 

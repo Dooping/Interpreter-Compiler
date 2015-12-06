@@ -131,6 +131,8 @@ TOKEN :
   |
   < TL: "tl" >
   |
+  < NEGATE: "!" >
+  |
   < Id: ["a"-"z","A"-"Z"] ( ["a"-"z","A"-"Z","0"-"9"] )* >
 }
 
@@ -161,10 +163,9 @@ ASTNode Concat() :
 ASTNode List() :
 { ASTNode t1,t2;}
 {
-   t1 =REF() ( 	(< TWOEXPR > t2 =List() {t1 = new ASTList(t1,t2);})+
+   t1 =REF() ((	< TWOEXPR > t2 =List() {t1 = new ASTList(t1,t2);})+
 				 |
-				 (< RBRACKET >{t1 = new ASTList(t1,null);})
-				   )
+				 (				   < RBRACKET >{t1 = new ASTList(t1,null);}))
    {return t1;}
 }
 
@@ -300,7 +301,8 @@ ASTNode Fact() :
    | <LCHAV> t = Record() <RCHAV>{return t; }
    | <LBRACKET> t = List(){return t; }
    | < HD > t=Fact(){return new ASTHd(t);}
-   | < TL > t=Fact(){return new ASTTl(t);}            
+   | < TL > t=Fact(){return new ASTTl(t);}
+   | < NEGATE > t=Bexp(){return new ASTNegate(t);}   
 }
 
 

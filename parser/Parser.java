@@ -435,6 +435,11 @@ public class Parser implements ParserConstants {
       t = Fact();
                      {if (true) return new ASTTl(t);}
       break;
+    case NEGATE:
+      jj_consume_token(NEGATE);
+      t = Bexp();
+                         {if (true) return new ASTNegate(t);}
+      break;
     default:
       jj_la1[15] = jj_gen;
       jj_consume_token(-1);
@@ -590,7 +595,7 @@ public class Parser implements ParserConstants {
       jj_la1_0 = new int[] {0x8000,0x0,0x8000,0x8000,0x4000,0xc0000,0xc0000,0x300000,0x300000,0xc0000000,0xc0000000,0x3c000000,0x3c000000,0x400000,0x400,0x15b0890,0x0,0x0,0x0,0x0,0x1000000,};
    }
    private static void jj_la1_init_1() {
-      jj_la1_1 = new int[] {0x0,0x2000,0x0,0x1000,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x1cc02,0x200,0x10000,0x10,0x200,0xe0,};
+      jj_la1_1 = new int[] {0x0,0x2000,0x0,0x1000,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x3cc02,0x200,0x20000,0x10,0x200,0xe0,};
    }
 
   /** Constructor with InputStream. */
@@ -728,7 +733,7 @@ public class Parser implements ParserConstants {
   /** Generate ParseException. */
   static public ParseException generateParseException() {
     jj_expentries.clear();
-    boolean[] la1tokens = new boolean[49];
+    boolean[] la1tokens = new boolean[50];
     if (jj_kind >= 0) {
       la1tokens[jj_kind] = true;
       jj_kind = -1;
@@ -745,7 +750,7 @@ public class Parser implements ParserConstants {
         }
       }
     }
-    for (int i = 0; i < 49; i++) {
+    for (int i = 0; i < 50; i++) {
       if (la1tokens[i]) {
         jj_expentry = new int[1];
         jj_expentry[0] = i;

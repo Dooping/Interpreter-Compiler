@@ -87,6 +87,10 @@ public class CodeBlock {
 		code.add("sipush "+n);
 	}
 	
+	public void emit_xor(){
+		code.add("ixor");
+	}
+	
 	public void emit_add(){
 		code.add("iadd");
 	}
