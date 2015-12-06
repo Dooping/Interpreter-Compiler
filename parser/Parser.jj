@@ -122,6 +122,16 @@ TOKEN :
   |
   < VAR: "var" >
   |
+  < LBRACKET: "[" >
+  |
+  < RBRACKET: "]" >
+  |
+  < CONCAT: "::" >
+  |
+  < HD: "hd" >
+  |
+  < TL: "tl" >
+  |
   < Id: ["a"-"z","A"-"Z"] ( ["a"-"z","A"-"Z","0"-"9"] )* >
 }
 
@@ -135,10 +145,27 @@ ASTNode Texp():
 { Token op;
   ASTNode t1, t2; }
 {
-     t1=REF() (  op=<TWOEXPR>  t2=REF() 
+     t1=Concat() (  op=<TWOEXPR>  t2=Concat() 
                { t1 = new ASTTwoExpr(t1,t2); }
                ) *
      { return t1; } 
+}
+
+ASTNode Concat() :
+{ Token n; 
+  ASTNode t1,t2;}
+{
+   t1 =REF() (< CONCAT > t2=REF() { t1 = new ASTConcat(t1,t2);})*
+   {return t1;}
+}
+
+ASTNode List() :
+{ ASTNode t1,t2;}
+{
+   t1 =REF() ((	< TWOEXPR > t2 =List() {t1 = new ASTList(t1,t2);})+
+				 |
+				 (				   < RBRACKET >{t1 = new ASTList(t1,null);}))
+   {return t1;}
 }
 
 ASTNode REF() :
@@ -270,7 +297,10 @@ ASTNode Fact() :
    | <WHILE> t = Texp() <DO> t1 = Texp()  <END> { t = new ASTWhile(t,t1); return t;}
    | <IF> t = Texp() <THEN> t1 = Texp()  <ELSE> t2=Texp() < END > { t = new ASTIf(t,t1,t2); return t;}
    | < FUN> n=<Id > <COLON> ty = type()<ARROW> t = Texp() < END > {return new ASTFun(n.image,t,ty);}
-   | <LCHAV> t = Record() <RCHAV>{return t; }            
+   | <LCHAV> t = Record() <RCHAV>{return t; }
+   | <LBRACKET> t = List(){return t; }
+   | < HD > t=Fact(){return new ASTHd(t)}
+   | < TL > t=Fact(){return new ASTTl(t)}            
 }
 
 

@@ -89,7 +89,13 @@ public interface ParserConstants {
   /** RegularExpression Id. */
   int VAR = 42;
   /** RegularExpression Id. */
-  int Id = 43;
+  int LBRACKET = 43;
+  /** RegularExpression Id. */
+  int RBRACKET = 44;
+  /** RegularExpression Id. */
+  int CONCAT = 45;
+  /** RegularExpression Id. */
+  int Id = 46;
 
   /** Lexical state. */
   int DEFAULT = 0;
@@ -139,6 +145,9 @@ public interface ParserConstants {
     "\":\"",
     "\",\"",
     "\"var\"",
+    "\"[\"",
+    "\"]\"",
+    "\"::\"",
     "<Id>",
   };
 
