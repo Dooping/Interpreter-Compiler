@@ -5,15 +5,20 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 
 public class CodeBlock {
-	ArrayList<CompilerFrame> frames;
-	ArrayList<String> code;
-	static int currentLabel;
+	
+	protected ArrayList<CompilerFrame> frames;
+	//ArrayList<CompilerFrame> frames;
+	protected ArrayList<String> code;
+	protected static int currentLabel;
+	protected static int currentClosure;
 	
 	CodeBlock(){
 		code = new ArrayList<String>();
 		frames = new ArrayList<CompilerFrame>();
 		currentLabel = 0;
+		currentClosure = 0;
 	}
+	
 	public int labelGenarator(){
 		return currentLabel++;
 	}
@@ -131,13 +136,7 @@ public class CodeBlock {
 	}
 	
 	public void endFrame(int frame, int father){
-		
-		/*
-		 * aload 1
-			checkcast frame_4
-			getfield frame_4/SL Lframe_1;
-			astore 1
-		 */
+
 		if(frame > 1 && father != 0){
 			emit_aload();
 			code.add("checkcast frame_" + frame);
@@ -208,6 +207,17 @@ public class CodeBlock {
 	public void emit_dup(){
 		code.add("dup");
 	}
+	
+	public void emit_Fun(){
+		code.add("new closure_f_"+currentClosure);
+		this.emit_dup();
+		//TODO: mudar o SL para o local onde guarda 
+		//o SL corrente
+		code.add("aload SL");
+		code.add("putfield closure_f_" + currentClosure +"SL type;");
+		
+	}
+	
 	
 	public void dump(){
 		createDemo();
@@ -360,5 +370,21 @@ public class CodeBlock {
 		}catch(Exception e){
 			//e.printStackTrace();
 		}
+		
+		
+		/*
+		 * closure_interface_type_t002
+		 */
+		try{
+			PrintWriter out = new PrintWriter("closure_interfaceClosure.j");
+			out.println(".source frame.j");
+			out.println(".interface public frame");
+			out.println(".super java/lang/Object");
+			out.close();
+		}catch(Exception e){
+			//e.printStackTrace();
+		}
+		
+		
 	}
 }

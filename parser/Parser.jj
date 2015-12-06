@@ -82,6 +82,10 @@ TOKEN :
   |
   < RPAR : ")" >
   |
+  < LCHAV : "{ " >
+  |
+  < RCHAV : "}" >
+  |
   < BIGGER : ">" >
   |
   < SMALLER : "<" >
@@ -108,13 +112,14 @@ TOKEN :
   |
    < BOOLEAN : "bool" >
   |
-    < REF : "ref" >
+  < REF : "ref" >
   |
   < COLON : ":" >
   |
   < COMMA : "," >
   |
   < VAR: "var" >
+  
   |
   < Id: ["a"-"z","A"-"Z"] ( ["a"-"z","A"-"Z","0"-"9"] )* >
 }
@@ -230,8 +235,6 @@ ASTNode Fact() :
 { Token n; 
   ASTNode t, t1,t2;
   Type ty;
-	ArrayList<String> ids = new ArrayList <String>();
-	ArrayList<Type> types= new ArrayList <Type>();
   }
 {
 
@@ -245,13 +248,22 @@ ASTNode Fact() :
    | t = Decl() {   return t; }
    | <WHILE> t = Texp() <DO> t1 = Texp()  <END> { t = new ASTWhile(t,t1); return t;}
    | <IF> t = Texp() <THEN> t1 = Texp()  <ELSE> t2=Texp() < END > { t = new ASTIf(t,t1,t2); return t;}
-   |
-   < FUN> n=<Id >   {ids.add(n.image);}
-   (<COMMA> n=<Id>{ids.add(n.image);})*
-    <COLON>
-    ty = type(){types.add(ty); }
-    (<COMMA> ty = type(){types.add(ty);})*
-   <ARROW> t = Texp() < END > {return new ASTFun(ids,t,types);}         
+   | < FUN> n=<Id > <COLON> ty = type()<ARROW> t = Texp() < END > {return new ASTFun(n.image,t,ty);}
+   | t = Record(){   return t; }         
+}
+
+
+
+ASTNode Record():
+{
+  ASTNode t;
+  Token x;
+  ArrayList <Binding> bindings = new ArrayList<Binding>();
+}
+{	<RCHAV> x=<Id><EQUALS> t = Texp(){ bindings.add(new Binding (x.image, t));}
+	(<COMMA> x=<Id><EQUALS> t = Texp() { bindings.add(new Binding (x.image, t));}  )+ <LCHAV>
+	{	  return new ASTRecord(bindings);	}	 
+
 }
 
 ASTNode Decl():
@@ -277,14 +289,9 @@ ASTNode Decl():
 Type type():
 {
   Type t1,t2;
-  ArrayList<Type> types= new ArrayList <Type>();
 }
 {
-  	//pairType
-	t1 = baseType()  { types.add(t1); }
-	 ( < COMMA> t1 = baseType() {types.add(t1);}
-  		)*
-
+	t1 = baseType()
 	( <ARROWT> t2=type()
 	{
 	  t1 = new funType(t1,t2);
@@ -294,22 +301,6 @@ Type type():
 	  return t1;
 	}
 	
-}
-Type parType():
-{	  Type t1,t2;
-}
-{t1 = baseType()  { types.add(t1); }
-	 ( < COMMA> t1 = baseType() {types.add(t1);}
-  		)*
-
-	( <COMMA> t2=baseType()
-	{
-	  t1 = new PairType(t1,t2);
-	}
-	)*
-	{
-	  return t1;
-	}
 }
 
 

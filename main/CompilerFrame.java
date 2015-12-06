@@ -38,7 +38,6 @@ public class CompilerFrame {
 		return up != null;
 	}
 	
-	//não é para ir a procura em cima, é so no seu env
 	public boolean containsId (String id){
 		for(String num: ids){
 			if(num.equals(id)) return true;
