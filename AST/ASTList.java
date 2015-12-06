@@ -25,25 +25,23 @@ ASTNode hd, tl;
     	return "["+hd + ";" + tl+"]";
     }
 
-	@Override
-	public IValue eval(Environ<IValue> e)
-			throws UndeclaredIdentifierException, DuplicateIdentifierException, ExecutionErrorException {
+	
+	public IValue eval(Environ<IValue> e)throws UndeclaredIdentifierException, DuplicateIdentifierException, ExecutionErrorException {
 		
-		IListValue tailValue= (tl!=null) ? (IListValue)tl.eval(e) : new EmptyListValue();
+		IListValue tailValue = (tl!=null) ? (IListValue)tl.eval(e) : new EmptyListValue();
 		
 		return new ConsValue(hd.eval(e),tailValue);
 	}
 
-	@Override
-	public Type typeCheck(Environ<Type> env)
-			throws TypeErrorException, DuplicateIdentifierException, UndeclaredIdentifierException {
+	
+	public Type typeCheck(Environ<Type> env)throws TypeErrorException, DuplicateIdentifierException, UndeclaredIdentifierException {
 		hd.typeCheck(env);/////
 		if(tl!=null)
 			tl.typeCheck(env);/////
 		return ListType.value;
 	}
 
-	@Override
+	
 	public void compile(CodeBlock code, CompilerFrame env)
 			throws UndeclaredIdentifierException, DuplicateIdentifierException {
 		

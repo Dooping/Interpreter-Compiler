@@ -10,17 +10,17 @@ public class ConsValue implements IListValue {
 		this.tl = tl;
 	}
 
-	@Override
+	
 	public IValue hd() {
 		return hd;
 	}
 
-	@Override
+	
 	public IListValue tl() {
 		return tl;
 	}
 	
-	@Override
+	
 	public String toString(){
 		return hd.toString();
 	}
