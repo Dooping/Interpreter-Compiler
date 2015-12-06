@@ -1,12 +1,8 @@
 package AST;
 
-import Types.ListType;
-import Types.Type;
+import Types.*;
 import Values.IValue;
-import exceptions.DuplicateIdentifierException;
-import exceptions.ExecutionErrorException;
-import exceptions.TypeErrorException;
-import exceptions.UndeclaredIdentifierException;
+import exceptions.*;
 import main.CodeBlock;
 import main.CompilerFrame;
 import main.Environ;
@@ -19,28 +15,31 @@ public class ASTConcat implements ASTNode{
 		this.right = right;
 	}
 
-	@Override
-	public IValue eval(Environ<IValue> e)
-			throws UndeclaredIdentifierException, DuplicateIdentifierException, ExecutionErrorException {
-
+	
+	public IValue eval(Environ<IValue> e)throws UndeclaredIdentifierException, DuplicateIdentifierException, ExecutionErrorException {
 		return new ASTList(left,right).eval(e);
 	}
 
-	@Override
-	public Type typeCheck(Environ<Type> env)
-			throws TypeErrorException, DuplicateIdentifierException, UndeclaredIdentifierException {
-		// TODO Auto-generated method stub
-		return ListType.value;
+	
+	public Type typeCheck(Environ<Type> env)throws TypeErrorException, DuplicateIdentifierException, UndeclaredIdentifierException {
+		Type l = left.typeCheck(env);
+		Type r = right.typeCheck(env);
+		
+		if(l instanceof ListType)
+			throw new TypeErrorException("Expecting a value, not a list");
+		
+		if(r instanceof ListType)
+			return ListType.value;
+		
+		throw new TypeErrorException("Expecting a List");
 	}
 
-	@Override
-	public void compile(CodeBlock code, CompilerFrame env)
-			throws UndeclaredIdentifierException, DuplicateIdentifierException {
-		// TODO Auto-generated method stub
+	
+	public void compile(CodeBlock code, CompilerFrame env)throws UndeclaredIdentifierException, DuplicateIdentifierException {
 		
 	}
 	
-	@Override
+	
 	public String toString(){
 		return left.toString() + "::" + right.toString();
 	}

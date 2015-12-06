@@ -19,20 +19,19 @@ public class ASTTl implements ASTNode {
 		this.list = list;
 	}
 
-	@Override
+	
 	public IValue eval(Environ<IValue> e)
 			throws UndeclaredIdentifierException, DuplicateIdentifierException, ExecutionErrorException {
 		return ((IListValue)list.eval(e)).tl();
 	}
 
-	@Override
-	public Type typeCheck(Environ<Type> env)
-			throws TypeErrorException, DuplicateIdentifierException, UndeclaredIdentifierException {
-		// TODO Auto-generated method stub
-		return null;
+	
+	public Type typeCheck(Environ<Type> env) throws TypeErrorException, DuplicateIdentifierException, UndeclaredIdentifierException {
+
+		return list.typeCheck(env);
 	}
 
-	@Override
+	
 	public void compile(CodeBlock code, CompilerFrame env)
 			throws UndeclaredIdentifierException, DuplicateIdentifierException {
 		// TODO Auto-generated method stub
