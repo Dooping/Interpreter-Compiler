@@ -33,11 +33,13 @@ public class ASTCallRecord implements ASTNode{
 	public Type typeCheck(Environ<Type> env) throws TypeErrorException,DuplicateIdentifierException, UndeclaredIdentifierException {
 		Type recordType = record.typeCheck(env);
 		if( recordType instanceof RecordType ){
-			Map<String, Type> types = ( (RecordType) recordType).getTypes();
-			if(types.containsKey(id)){
-				return types.get(id);
+			ArrayList <String> ids = ( (RecordType) recordType).getIds();
+			ArrayList <Type> types = ( (RecordType) recordType).getTypes();
+			for (int i = 0; i<ids.size(); i++){
+				if(ids.get(i).equals(id))
+					return types.get(i);
 			}
-			else throw new UndeclaredIdentifierException("Expecting record identifier");
+			throw new UndeclaredIdentifierException("Expecting record identifier");
 		}
 		else throw new TypeErrorException("Expecting recordType");
 

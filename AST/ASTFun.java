@@ -28,12 +28,7 @@ public class ASTFun implements ASTNode {
 
 	public Type typeCheck(Environ<Type> env) throws TypeErrorException, DuplicateIdentifierException, UndeclaredIdentifierException{
 
-		//Type parType = null;
 		Environ<Type> envLoc = env.beginScope();
-		//parType = envLoc.findType(id);
-		//funType t = ((funType) type);
-		//parType = t.getParType();
-		
 		envLoc.assocType(id, type);
 		ReturnType = exp.typeCheck(envLoc);
 		return new funType(type, ReturnType);

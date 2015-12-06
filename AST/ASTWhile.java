@@ -21,7 +21,6 @@ public class ASTWhile implements ASTNode{
 		while(v.val){
 			i = body.eval(e);
 			v = (BooleanValue) clause.eval(e);
-			System.out.println( i.toString());
 		}
 		
 		return v;

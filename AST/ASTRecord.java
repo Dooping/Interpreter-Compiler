@@ -12,8 +12,10 @@ import main.*;
 public class ASTRecord implements ASTNode{
 	
 	ArrayList <Binding> values;
-	private Map<String, Type> types = new TreeMap<String, Type>();
+	private ArrayList <Type> types ;
+	private ArrayList <String> ids ;
 	private Map<String, IValue> Ivalues;
+	
 	
 	public ASTRecord(ArrayList <Binding> ds){
 		values = ds;
@@ -27,12 +29,18 @@ public class ASTRecord implements ASTNode{
 	}
 
 	public Type typeCheck(Environ<Type> env) throws TypeErrorException,DuplicateIdentifierException, UndeclaredIdentifierException {
-		types = new TreeMap<String, Type>();
+		
+		types = new ArrayList< Type>();
+		ids = new ArrayList< String>();
 		for(Binding value: values){
-			types.put(value.getID(), value.getExpr().typeCheck(env));
+			for (int i = 0; i<ids.size();i++)
+				if(ids.get(i).equals(value.getID()))
+					throw new DuplicateIdentifierException(value.getID());
+			
+			types.add(value.getExpr().typeCheck(env));
+			ids.add(value.getID());
 		}
-	
-		return new RecordType(types);
+		return new RecordType(types,ids);
 	}
 
 	public void compile(CodeBlock code, CompilerFrame env)throws UndeclaredIdentifierException, DuplicateIdentifierException {

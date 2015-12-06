@@ -1,5 +1,8 @@
 package AST;
 
+import java.util.ArrayList;
+import java.util.Map;
+
 import Types.*;
 import exceptions.*;
 import Values.*;
@@ -40,6 +43,25 @@ public class ASTCall implements ASTNode {
 		
 		if(leftType instanceof funType){
 			funType funT = (funType) leftType;
+			//o argumento que passamos por parametro, tem de ser igual ao
+			//que declaramos que iamos receber!
+			System.out.println(funT.getParType() + " " + argType);
+			if(!funT.getParType().toString().equals(argType.toString())){
+				throw new TypeErrorException("Expecting same type!");
+			}
+
+			if(argType instanceof RecordType){
+				RecordType ArgumentType = (RecordType)argType;
+				//Já sabemos que são os dois do mesmo tipo!
+				RecordType original = (RecordType)funT.getParType();
+				ArrayList<Type> typesOfArg = ArgumentType.getTypes();
+				ArrayList<Type> typesOfOrig = original.getTypes();
+				for (int i = 0; i<typesOfArg.size(); i++){
+					if(!typesOfArg.get(i).equals(typesOfOrig.get(i)))
+						throw new TypeErrorException("Expecting same type on record!");
+				}
+			}
+				
 			return funT.getResultType();
 		}
 		else throw new TypeErrorException("Calling non-funtion value");

@@ -10,15 +10,20 @@ import main.Binding;
 
 public class RecordType implements Type{
 	
+	private ArrayList<String> ids;
+	private ArrayList<Type> types;
 
-	private Map<String, Type> types = new TreeMap<String, Type>();
-
-	public RecordType (Map<String, Type> t){
+	public RecordType (ArrayList<Type> t, ArrayList<String> i){
 		this.types = t;
+		this.ids = i;
 	}
 	
-	public Map<String, Type> getTypes(){
+	public ArrayList<Type> getTypes(){
 		return types;
+	}
+	
+	public ArrayList<String> getIds(){
+		return ids;
 	}
 
 	
