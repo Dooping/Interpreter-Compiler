@@ -17,30 +17,20 @@ public class ASTRecord implements ASTNode{
 	}
 
 	public IValue eval(Environ<IValue> e) throws UndeclaredIdentifierException,DuplicateIdentifierException, ExecutionErrorException {
-		ArrayList<IValue> v = new ArrayList<IValue>();
-		IValue idValue = null;
-		Environ<IValue> newEnv = e.beginScope();
-		for(Binding value: values){
-			v.add(value.getExpr().eval(e));
-			newEnv.assoc(value.getID(),idValue);
-		}
-		newEnv.endScope();
-		return new RecordValue(v);
+		for(Binding value: values)
+			value.getExpr().eval(e);
+		return new RecordValue(values);
 	}
 
 	public Type typeCheck(Environ<Type> env) throws TypeErrorException,DuplicateIdentifierException, UndeclaredIdentifierException {
-		ArrayList<Type> types = new ArrayList<Type>();
 		Type idType = null;
-		Environ<Type> newEnv = env.beginScope();
 		TypesOfVar = new ArrayList<Type>();
 		for(Binding value: values){
-			types.add(value.getExpr().typeCheck(newEnv));
-			newEnv.assocType(value.getID(),idType);
+			value.getExpr().typeCheck(env);
 			TypesOfVar.add(idType);
 		}
 	
-		newEnv.endScope();
-		return new RecordType(types);
+		return new RecordType(values);
 	}
 
 	public void compile(CodeBlock code, CompilerFrame env)throws UndeclaredIdentifierException, DuplicateIdentifierException {

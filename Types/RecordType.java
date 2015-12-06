@@ -2,19 +2,22 @@ package Types;
 
 import java.util.ArrayList;
 
+import main.Binding;
+
 
 
 public class RecordType implements Type{
 	
-	ArrayList<Type> types;
+	private ArrayList <Binding> types;
 	
-	public RecordType (ArrayList<Type> t){
+	public RecordType (ArrayList <Binding> t){
 		this.types = t;
 	}
 	
-	public ArrayList<Type> getTypes(){
+	public ArrayList <Binding> getTypes(){
 		return types;
 	}
+
 	
 	public String toString(){
 		return "Record";

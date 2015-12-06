@@ -2,14 +2,19 @@ package Values;
 
 import java.util.ArrayList;
 
-import Types.Type;
+import main.Binding;
+
 
 public class RecordValue implements IValue{
 	
-	ArrayList<IValue> values;
+	private ArrayList <Binding> values;
 	
-	public RecordValue (ArrayList<IValue> v){
+	public RecordValue (ArrayList <Binding> v){
 		values = v;
+	}
+	
+	public ArrayList<Binding> getBind(){
+		return values;
 	}
 	
 	public String toString(){

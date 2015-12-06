@@ -56,7 +56,7 @@ TOKEN :
   |
   < ASSOC : "=" >
   |
-   <DOT  : "." >
+  < DOT  : "." >
   |
   < IF : "if" >
   |
@@ -221,7 +221,7 @@ ASTNode Call():
 }
 {
 
-  f1=Fact() (
+  f1=CallRecord() (
     < LPAR > f2=Texp() < RPAR >
     {
       f1 = new ASTCall(f1,f2);    }    
@@ -283,7 +283,7 @@ ASTNode Record():
 {
 	 x=<Id><ASSOC> t = Fact() 
 	{ bindings.add(new Binding (x.image, t));}
-	(<COMMA> x=<Id><ASSOC> t = Texp() { bindings.add(new Binding (x.image, t));}  )+
+	(<COMMA> x=<Id><ASSOC> t = Texp() { bindings.add(new Binding (x.image, t));}  )*
 	{
 	  return new ASTRecord(bindings);
 	}

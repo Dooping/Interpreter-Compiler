@@ -245,7 +245,7 @@ public class Parser implements ParserConstants {
 
   static final public ASTNode Call() throws ParseException {
   ASTNode f1,f2;
-    f1 = Fact();
+    f1 = CallRecord();
     label_6:
     while (true) {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
@@ -384,11 +384,6 @@ public class Parser implements ParserConstants {
           bindings.add(new Binding (x.image, t));
     label_8:
     while (true) {
-      jj_consume_token(COMMA);
-      x = jj_consume_token(Id);
-      jj_consume_token(ASSOC);
-      t = Texp();
-                                            bindings.add(new Binding (x.image, t));
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case COMMA:
         ;
@@ -397,6 +392,11 @@ public class Parser implements ParserConstants {
         jj_la1[13] = jj_gen;
         break label_8;
       }
+      jj_consume_token(COMMA);
+      x = jj_consume_token(Id);
+      jj_consume_token(ASSOC);
+      t = Texp();
+                                            bindings.add(new Binding (x.image, t));
     }
           {if (true) return new ASTRecord(bindings);}
     throw new Error("Missing return statement in function");
